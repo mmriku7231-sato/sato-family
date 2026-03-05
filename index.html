@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>祝！ゆみよ還暦 三姉妹プレゼンツ</title>
+    <!-- Tailwind CSS (スタイリング補助) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (丸ゴシック) -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Splide CSS & AutoScroll Extension (スライダー用) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <style>
+        :root {
+            --primary-light: #94DFF6; /* 空色 */
+            --accent-pink: #f27eb7;   /* お祝いピンク */
+            --gallery-blue: #2b508c;  /* ギャラリー背景 */
+            --soft-bg: #fdfbf7;       /* 全体背景 */
+            --text-dark: #4a5568;
+            --line-green: #06C755;    /* LINEブランドカラー */
+            --line-bg: #8b9cb5;       /* LINEトーク背景 */
+        }
+
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background-color: var(--soft-bg);
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+        }
+
+        /* --- アニメーション --- */
+        .fade-up-trigger {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        .fade-up-trigger.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- LINEトーク画面 --- */
+        .line-chat-container {
+            background-color: var(--line-bg);
+            border-radius: 30px;
+            padding: 25px 15px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chat-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .chat-icon {
+            width: 35px;
+            height: 35px;
+            background-color: #eee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #777;
+            flex-shrink: 0;
+            border: 1px solid #fff;
+        }
+        .chat-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-width: 75%;
+        }
+        .chat-name {
+            font-size: 10px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-left: 2px;
+        }
+        .chat-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 0 15px 15px 15px;
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.5;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .chat-bubble::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -10px;
+            border-style: solid;
+            border-width: 0 12px 12px 0;
+            border-color: transparent #ffffff transparent transparent;
+        }
+        .chat-meta {
+            display: flex;
+            align-items: flex-end;
+            margin-left: 5px;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: bold;
+        }
+
+        /* --- ファーストビュー (FV) --- */
+        .fv-container {
+            position: relative;
+            width: 100%;
+            height: 75vh;
+            overflow: hidden;
+            background: #fff;
+        }
+        .splide__slide { padding: 5px; }
+        .collage-item { width: 100%; height: 65vh; display: flex; gap: 10px; }
+        .collage-img { border-radius: 20px; object-fit: cover; width: 100%; height: 100%; }
+
+        .fv-title-area {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            width: 100%;
+            text-align: center;
+            pointer-events: none;
+        }
+        .fv-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            -webkit-text-stroke: 1px var(--accent-pink);
+            letter-spacing: -0.02em;
+        }
+
+        /* --- ナビゲーション --- */
+        .sticky-nav {
+            position: sticky;
+            top: 15px;
+            margin: 0 15px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-radius: 50px;
+            z-index: 100;
+            border: 1px solid var(--primary-light);
+            box-shadow: 0 4px 15px rgba(148, 223, 246, 0.15);
+        }
+
+        /* --- 見出し H2 (マージン拡大) --- */
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-align: center;
+            position: relative;
+            padding-bottom: 12px;
+            margin-bottom: 55px !important; /* 余裕のある余白 */
+            color: var(--text-dark);
+            background: transparent !important;
+        }
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 4px;
+            background-color: var(--primary-light);
+            border-radius: 10px;
+        }
+
+        /* --- スケジュール コンテナ --- */
+        .schedule-box {
+            border-radius: 45px;
+            transition: background-color 0.5s ease;
+            padding: 30px 20px 45px 20px;
+        }
+        .tab-btn { transition: all 0.3s ease; background: white; }
+        .day-1-active { background-color: #eafaff; }
+        .day-1-active #tab-1 { background-color: var(--primary-light); color: white; border-color: var(--primary-light); transform: translateY(-3px); }
+        .day-2-active { background-color: #fff0f6; }
+        .day-2-active #tab-2 { background-color: var(--accent-pink); color: white; border-color: var(--accent-pink); transform: translateY(-3px); }
+        .day-3-active { background-color: #f8fafc; }
+        .day-3-active #tab-3 { background-color: #94a3b8; color: white; border-color: #94a3b8; transform: translateY(-3px); }
+
+        .schedule-content { display: none; }
+        .schedule-content.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- メンバーカード --- */
+        .member-card {
+            display: flex;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+        .member-img-box { width: 60%; aspect-ratio: 1/1; background-color: #f8fafc; }
+        .member-info { width: 40%; padding: 12px; display: flex; flex-direction: column; justify-content: center; }
+
+        /* --- その他 --- */
+        #back-to-top {
+            position: fixed; bottom: 25px; right: 20px; width: 55px; height: 55px;
+            background: var(--accent-pink); color: white; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 200; opacity: 0; pointer-events: none; transition: all 0.3s;
+            text-decoration: none;
+        }
+        #back-to-top.show { opacity: 1; pointer-events: auto; }
+
+        input:checked + span {
+            text-decoration: line-through;
+            color: #ccc;
+        }
+
+        /* ギャラリーモード表示制御 */
+        #main-content.hidden { display: none; }
+        #gallery-page { display: none; }
+        #gallery-page.active { display: block; }
+    </style>
+</head>
+<body class="max-w-md mx-auto">
+
+    <!-- TOPへもどるボタン -->
+    <a href="#top" id="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+        <span class="text-[8px] font-bold">TOP</span>
+    </a>
+
+    <!-- メインコンテンツ (LP) -->
+    <div id="main-content">
+        <nav class="sticky-nav flex justify-around py-3 px-4">
+            <a href="#schedule-section" class="text-[11px] font-bold hover:text-pink-400">旅の予定</a>
+            <a href="#members" class="text-[11px] font-bold hover:text-pink-400">メンバー紹介</a>
+            <a href="#packing" class="text-[11px] font-bold hover:text-pink-400">持ち物</a>
+            <button onclick="toggleGallery(true)" class="text-[11px] font-bold text-[#f27eb7]">ギャラリー</button>
+        </nav>
+
+        <header id="top" class="fv-container">
+            <div class="fv-title-area">
+                <div class="inline-block bg-red-500 text-white text-[10px] font-black px-6 py-1 rounded-full mb-4 shadow-md pointer-events-auto animate-bounce">祝・還暦</div>
+                <h1 class="fv-title italic">祝！ゆみよ還暦<br><span class="text-xl tracking-[0.2em] -mt-2 block not-italic">三姉妹プレゼンツ</span></h1>
+            </div>
+
+            <!-- スライダーエリア -->
+            <div id="slider_fv" class="splide">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="collage-item flex-col">
+                                <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400" class="collage-img h-1/2">
+                                <img src="https://images.unsplash.com/photo-1578469550956-0e16b69c6a3d?auto=format&fit=crop&q=80&w=400" class="collage-img h-1/2">
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="collage-item">
+                                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" class="collage-img">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- 自作ロゴ設置エリア -->
+        <section class="py-16 bg-white text-center px-6">
+            <div class="fade-up-trigger flex flex-col items-center justify-center">
+                <div class="w-64 h-32 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl flex items-center justify-center text-slate-400">
+                    <p class="text-xs font-bold uppercase tracking-widest text-center">
+                        <i class="fas fa-image text-2xl mb-2 block"></i>
+                        作成したロゴ画像を<br>ここに設置！
+                    </p>
+                </div>
+                <p class="text-[10px] mt-4 font-bold tracking-[0.3em] text-slate-300 text-center">2026.05.21 - 23 IN KAGAWA</p>
+            </div>
+        </section>
+
+        <!-- LINE風メッセージのやり取り -->
+        <section class="px-6 py-12 bg-white">
+            <div class="line-chat-container">
+                <div class="chat-row">
+                    <div class="chat-icon">あ</div>
+                    <div class="chat-content">
+                        <span class="chat-name">あさみ</span>
+                        <div class="chat-bubble">お母さん還暦おめでとう！🎂</div>
+                    </div>
+                    <div class="chat-meta">既読<br>11:03</div>
+                </div>
+                <div class="chat-row">
+                    <div class="chat-icon">み</div>
+                    <div class="chat-content">
+                        <span class="chat-name">みな</span>
+                        <div class="chat-bubble">左藤家に生まれ、育ててもらって恩として、感謝のおもてなし旅行をプレゼントします！🎁</div>
+                    </div>
+                    <div class="chat-meta">既読<br>11:03</div>
+                </div>
+                <div class="chat-row">
+                    <div class="chat-icon">な</div>
+                    <div class="chat-content">
+                        <span class="chat-name">なつみ</span>
+                        <div class="chat-bubble">いつもにゃんずのお世話と孫たちと遊んでくれてありがとう！思う存分に満喫してね！✨</div>
+                    </div>
+                    <div class="chat-meta">既読<br>11:04</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 旅の予定 -->
+        <section id="schedule-section" class="py-20 bg-white">
+            <h2>旅の予定</h2>
+            <div class="px-6">
+                <div id="schedule-container" class="schedule-box day-1-active">
+                    <div class="flex gap-2 mb-8">
+                        <button onclick="switchDay(1)" id="tab-1" class="tab-btn flex-1 py-3 rounded-2xl border-2 border-slate-100 font-black text-xs shadow-sm">1日目</button>
+                        <button onclick="switchDay(2)" id="tab-2" class="tab-btn flex-1 py-3 rounded-2xl border-2 border-slate-100 font-black text-xs shadow-sm">2日目</button>
+                        <button onclick="switchDay(3)" id="tab-3" class="tab-btn flex-1 py-3 rounded-2xl border-2 border-slate-100 font-black text-xs shadow-sm">3日目</button>
+                    </div>
+
+                    <!-- Day 1 Content -->
+                    <div id="day-1" class="schedule-content active">
+                        <div class="bg-white/50 p-4 rounded-2xl mb-6 border border-white/50 text-[10px] text-amber-600 font-bold flex items-center gap-1">
+                            <i class="fas fa-car-side"></i> 与那原家は別移動となります
+                        </div>
+                        <div class="space-y-8 text-sm">
+                            <div class="flex gap-4"><span class="font-black text-sky-500">09:00</span> <p class="font-bold">別府湾出航 ⛴️</p></div>
+                            <div class="flex gap-4"><span class="font-black text-sky-500">11:00</span> <p class="font-bold">愛媛到着 / 松山でランチ 🍱</p></div>
+                            <div class="flex gap-4">
+                                <span class="font-black text-sky-500">14:00</span>
+                                <div class="flex-1 text-center">
+                                    <p class="font-bold mb-3 underline decoration-sky-300 decoration-4">四国水族館 🐬</p>
+                                    <div class="rounded-2xl overflow-hidden border-2 border-white shadow-md">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.634!2d133.772591!3d34.321685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553934372555555%3A0x6b490f9686000000!2z5Zub5Zu95rC05peP6aSo!5e0!3m2!1sja!2sjp!4v1715600000000" width="100%" height="150" style="border:0;" loading="lazy"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 pt-4 border-t border-white/30">
+                                <span class="font-black text-sky-500">17:00</span>
+                                <div class="flex-1 text-center">
+                                    <p class="font-bold text-slate-700 mb-2">リブマックスリゾート讃岐塩江温泉</p>
+                                    <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3301.6409493827273!2d134.1010420759884!3d34.155526973118285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553b885a9525485%3A0x643d916fa4c249b9!2z44Oq44OW44Oe44OD44Kv44K544Oq44K-44O844OI6K6D5bKQ5aGp5rGf5rip5rOJ!5e0!3m2!1sja!2sjp!4v1772716480452!5m2!1sja!2sjp" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Day 2 Content -->
+                    <div id="day-2" class="schedule-content">
+                        <div class="space-y-8 text-sm">
+                            <div class="flex gap-4">
+                                <span class="font-black text-pink-500">09:00</span>
+                                <div class="flex-1 text-center">
+                                    <p class="font-bold mb-1 underline decoration-pink-300 decoration-4">金刀比羅宮 参拝 ⛩️</p>
+                                    <p class="text-[10px] text-slate-400 mb-3 italic">往復3時間予定。785段踏破！</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 pt-4 border-t border-white/30">
+                                <span class="font-black text-pink-500">17:00</span>
+                                <div class="flex-1 text-center">
+                                    <p class="font-bold text-slate-700 mb-2">湯元こんぴら温泉華の湯 紅梅亭</p>
+                                    <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3300.2489992945857!2d133.81441087572242!3d34.19111387310499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553d6439e091ef7%3A0x5c5e3bf9d73de2c6!2z5rmv5YWD44GT44KT44G044KJ5rip5rOJ6I-v44Gu5rmvIOe0heaiheS6rQ!5e0!3m2!1sja!2sjp!4v1772716423154!5m2!1sja!2sjp" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Day 3 Content -->
+                    <div id="day-3" class="schedule-content">
+                        <div class="py-10 text-center text-slate-500 font-bold">
+                            <p>愛媛 → 別府へ ⛴️<br>最高の思い出を胸に帰りましょう！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- メンバー紹介 -->
+        <section id="members" class="px-6 py-20 bg-white">
+            <h2>メンバー紹介</h2>
+            <div class="space-y-12">
+                <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#94DFF6] pl-3 text-slate-500 text-left">左藤の意思を継ぐもの</h3><div id="group-1"></div></div>
+                <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#f27eb7] pl-3 text-slate-500 text-left">スペシャルゲスト</h3><div id="group-2"></div></div>
+                <div>
+                    <h3 class="font-black text-xs mb-4 border-l-4 border-amber-400 pl-3 text-amber-600 text-left">お留守番にゃんこ</h3><div id="group-3-active"></div>
+                    <h3 class="font-black text-[10px] mt-8 mb-4 bg-slate-50 p-2 rounded text-center text-slate-400">他界にゃんこ</h3><div id="group-3-passed"></div>
+                </div>
+                <div><h3 class="font-black text-xs mb-4 border-l-4 border-slate-300 pl-3 text-slate-400 text-left">スペシャルメンバー</h3><div id="group-4"></div></div>
+            </div>
+
+            <!-- メンバーカード生成JS -->
+            <script>
+                const renderMember = (m) => `
+                    <div class="member-card">
+                        <div class="member-img-box flex items-center justify-center text-slate-200"><i class="fas fa-image text-4xl"></i></div>
+                        <div class="member-info">
+                            <h4 class="font-black text-xs mb-1 text-left">${m.name}</h4>
+                            <p class="text-[8px] text-[#f27eb7] font-bold mb-2 text-left">${m.role}</p>
+                            <p class="text-[9px] text-slate-500 leading-relaxed text-left">${m.comment}</p>
+                        </div>
+                    </div>`;
+                const groups = {
+                    "group-1": [{name:"ゆみよ",role:"母・主役",comment:"★テキスト★"},{name:"あさみ",role:"長女",comment:"★テキスト★"},{name:"みな",role:"次女",comment:"★テキスト★"},{name:"なつみ",role:"三女",comment:"★テキスト★"}],
+                    "group-2": [{name:"たかお",role:"次女夫",comment:"★テキスト★"},{name:"はるたか",role:"次女長男",comment:"★テキスト★"},{name:"ひろたか",role:"次女次男",comment:"★テキスト★"},{name:"ゆきと",role:"長女息子",comment:"★テキスト★"}],
+                    "group-3-active": [{name:"歌舞伎丸",role:"お留守番",comment:"★テキスト★"},{name:"茶々丸",role:"お留守番",comment:"★テキスト★"}],
+                    "group-3-passed": [{name:"にゃんた",role:"虹の橋",comment:"★テキスト★"},{name:"なお様",role:"虹の橋",comment:"★テキスト★"},{name:"アリス",role:"虹の橋",comment:"★テキスト★"},{name:"あずき",role:"虹の橋",comment:"★テキスト★"}],
+                    "group-4": [{name:"かずお",role:"父・見守り担当",comment:"★テキスト★"}]
+                };
+                Object.entries(groups).forEach(([id, members]) => { 
+                    const container = document.getElementById(id);
+                    if(container) container.innerHTML = members.map(renderMember).join(''); 
+                });
+            </script>
+
+            <!-- ギャラリー導線バナー -->
+            <div onclick="toggleGallery(true)" class="mt-20 bg-[#2b508c] text-white p-10 rounded-[40px] text-center cursor-pointer hover:opacity-90 transition shadow-xl">
+                <i class="fas fa-camera-retro text-4xl mb-4 text-white"></i>
+                <h3 class="text-xl font-black mb-1">旅の記録はこちら</h3>
+                <p class="text-[10px] opacity-60 uppercase tracking-widest font-bold">Memory Gallery</p>
+            </div>
+        </section>
+
+        <!-- 持ち物リスト (全項目復元) -->
+        <section id="packing" class="px-6 py-20 bg-slate-50 border-t-2 border-white">
+            <h2>持ち物リスト</h2>
+            <div class="space-y-4 max-w-[320px] mx-auto">
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
+                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
+                    <span class="text-sm font-bold text-slate-600">歩きやすい靴（参拝用）</span>
+                </label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
+                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
+                    <span class="text-sm font-bold text-slate-600">飲み物・水分補給</span>
+                </label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
+                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
+                    <span class="text-sm font-bold text-slate-600">モバイルバッテリー</span>
+                </label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
+                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
+                    <span class="text-sm font-bold text-slate-600">着替え・タオル</span>
+                </label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
+                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
+                    <span class="text-sm font-bold text-slate-600">常備薬・健康保険証</span>
+                </label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
+                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
+                    <span class="text-sm font-bold text-slate-600">お子様用のお菓子</span>
+                </label>
+            </div>
+        </section>
+
+        <footer class="bg-slate-900 text-white p-16 text-center">
+            <p class="text-xl font-black italic mb-4">Have a nice trip!</p>
+            <div class="w-12 h-1 bg-[#f27eb7] mx-auto mb-8"></div>
+            <p class="text-[10px] opacity-40 uppercase tracking-[0.3em]">Left Three Sisters Presents</p>
+            <p class="text-[8px] opacity-20 mt-8">Special Thanks: KAZUO</p>
+        </footer>
+    </div>
+
+    <!-- ギャラリーページ (別画面扱い) -->
+    <div id="gallery-page" class="min-h-screen bg-white p-8">
+        <button onclick="toggleGallery(false)" class="text-slate-400 mb-10 flex items-center font-bold">
+            <i class="fas fa-arrow-left mr-3"></i> もどる
+        </button>
+        <div class="text-center py-40">
+            <i class="fas fa-images text-7xl text-pink-50 mb-6"></i>
+            <h2 class="text-2xl font-black mb-4">写真準備中・・・</h2>
+            <p class="text-sm text-slate-400">旅が終わったら、素敵な家族写真を<br>ここにたくさん詰め込みましょう！</p>
+        </div>
+    </div>
+
+    <!-- Splide JS & 制御スクリプト -->
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // スライダー初期化
+            new Splide('#slider_fv', {
+                type: 'loop', drag: 'free', focus: 'center', arrows: false, pagination: false, autoWidth: true, gap: 15,
+                autoScroll: { speed: 0.6, pauseOnHover: false, pauseOnFocus: false },
+            }).mount(window.splide.Extensions);
+
+            // スクロール時のフェードアップアニメーション
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.2 });
+            document.querySelectorAll('.fade-up-trigger').forEach(el => observer.observe(el));
+        });
+
+        // 日程切り替え関数
+        function switchDay(day) {
+            const container = document.getElementById('schedule-container');
+            container.className = 'schedule-box day-' + day + '-active';
+            
+            document.querySelectorAll('.schedule-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('day-' + day).classList.add('active');
+        }
+
+        // TOPへもどるボタンの表示制御
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('back-to-top');
+            if (window.scrollY > 400) btn.classList.add('show');
+            else btn.classList.remove('show');
+        });
+
+        // ギャラリー切り替え関数 (メインを非表示にする)
+        function toggleGallery(show) {
+            const main = document.getElementById('main-content');
+            const gallery = document.getElementById('gallery-page');
+            if (show) {
+                main.classList.add('hidden');
+                gallery.classList.add('active');
+                window.scrollTo(0, 0);
+            } else {
+                main.classList.remove('hidden');
+                gallery.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
