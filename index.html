@@ -111,7 +111,7 @@
         .schedule-box { border-radius: 45px; padding: 30px 15px 45px 15px; transition: background-color 0.5s ease; }
         
         /* セクション内タブボタン */
-        .tab-btn { transition: all 0.3s ease; background: white; flex: 1; padding: 12px 0; border-radius: 16px; border: 2px solid #f1f5f9; font-weight: 900; font-size: 12px; shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .tab-btn { transition: all 0.3s ease; background: white; flex: 1; padding: 12px 0; border-radius: 16px; border: 2px solid #f1f5f9; font-weight: 900; font-size: 12px; }
         
         .area_item { position: relative; background: #fff; border-radius: 24px; margin-bottom: 25px; padding: 25px 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.03); }
         .area_item .time { position: absolute; top: -12px; left: 20px; background: var(--text-dark); color: #fff; padding: 2px 15px; border-radius: 20px; font-size: 12px; font-weight: 900; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -260,7 +260,7 @@
 
                     <!-- Day 1 Content -->
                     <div id="day-1" class="schedule-content active">
-                        <div class="bg-white/60 p-4 rounded-2xl mb-8 text-[10px] text-amber-600 font-bold border border-white/50">
+                        <div class="bg-white/60 p-4 rounded-2xl mb-8 text-[10px] text-amber-600 font-bold border border-white/50 text-center">
                             <i class="fas fa-car-side"></i> 1日目：与那原家は宿合流までは別移動となります
                         </div>
                         <div class="space-y-4">
@@ -325,7 +325,7 @@
                         </div>
                     </div>
 
-                    <!-- Day 2 -->
+                    <!-- Day 2 Content -->
                     <div id="day-2" class="schedule-content">
                         <div class="traffic"><span>朝食バイキング (07:15)</span></div>
                         <div class="traffic"><i class="fas fa-arrow-down"></i></div>
@@ -377,7 +377,7 @@
                         </div>
                     </div>
 
-                    <!-- Day 3 -->
+                    <!-- Day 3 Content -->
                     <div id="day-3" class="schedule-content">
                         <div class="traffic"><span>朝食バイキング (07:15)</span></div>
                         <div class="traffic"><i class="fas fa-arrow-down"></i></div>
@@ -422,12 +422,24 @@
             </div>
         </section>
 
-        <!-- メンバー紹介 -->
+        <!-- メンバー紹介 (完全復元) -->
         <section id="members" class="px-6 py-20 bg-white text-center">
             <h2>メンバー紹介</h2>
-            <div class="space-y-12" id="group-container">
+            <div class="space-y-12">
                 <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#94DFF6] pl-3 text-slate-500 text-left">左藤の意思を継ぐもの</h3><div id="group-1" class="grid grid-cols-1 gap-4"></div></div>
                 <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#f27eb7] pl-3 text-slate-500 text-left">スペシャルゲスト</h3><div id="group-2" class="grid grid-cols-1 gap-4"></div></div>
+                <div>
+                    <h3 class="font-black text-xs mb-4 border-l-4 border-amber-400 pl-3 text-amber-600 text-left">お留守番にゃんこ</h3><div id="group-3-active" class="grid grid-cols-1 gap-4"></div>
+                    <h3 class="font-black text-[10px] mt-8 mb-4 bg-slate-50 p-2 rounded text-center text-slate-400">他界にゃんこ</h3><div id="group-3-passed" class="grid grid-cols-1 gap-4"></div>
+                </div>
+                <div><h3 class="font-black text-xs mb-4 border-l-4 border-slate-300 pl-3 text-slate-400 text-left">スペシャルメンバー</h3><div id="group-4" class="grid grid-cols-1 gap-4"></div></div>
+            </div>
+
+            <!-- 旅の記録バナー (復元) -->
+            <div onclick="toggleGallery(true)" class="mt-20 bg-[#2b508c] text-white p-10 rounded-[40px] text-center cursor-pointer hover:opacity-90 transition shadow-xl">
+                <i class="fas fa-camera-retro text-4xl mb-4 text-white"></i>
+                <h3 class="text-xl font-black mb-1 text-center">旅の記録はこちら</h3>
+                <p class="text-[10px] opacity-60 uppercase tracking-widest font-bold text-center">Memory Gallery</p>
             </div>
         </section>
 
@@ -435,8 +447,12 @@
         <section id="packing" class="px-6 py-20 bg-slate-50 border-t-2 border-white">
             <h2>持ち物リスト</h2>
             <div class="space-y-4 max-w-[320px] mx-auto text-left">
-                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">歩きやすい靴（参拝用）</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">歩きやすい靴・杖（参拝用）</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">飲み物・水分補給</span></label>
                 <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">モバイルバッテリー</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">着替え・タオル</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">常備薬</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">キッズのお菓子</span></label>
             </div>
         </section>
 
@@ -444,6 +460,7 @@
             <p class="text-xl font-black italic mb-4 tracking-tighter">Have a nice trip!</p>
             <div class="w-12 h-1 bg-[#f27eb7] mx-auto mb-8"></div>
             <p class="text-[10px] opacity-40 uppercase tracking-[0.3em]">Left Three Sisters Presents</p>
+            <p class="text-[8px] opacity-20 mt-8 italic text-center">Special Thanks: KAZUO</p>
         </footer>
     </div>
 
@@ -453,6 +470,7 @@
         <div class="text-center py-40">
             <i class="fas fa-images text-7xl text-pink-50 mb-6"></i>
             <h2 class="text-2xl font-black mb-4 text-center">写真準備中・・・</h2>
+            <p class="text-sm text-slate-400 text-center">最高の家族写真をここに載せましょう！</p>
         </div>
     </div>
 
@@ -484,6 +502,7 @@
             document.querySelectorAll('.tab-btn').forEach(b => {
                 b.style.backgroundColor = 'white';
                 b.style.color = '#4a5568';
+                b.style.borderColor = '#f1f5f9';
             });
             const activeBtn = document.getElementById('tab-' + day);
             const colors = { 1: '#94DFF6', 2: '#f27eb7', 3: '#94a3b8' };
@@ -499,9 +518,29 @@
             else { main.classList.remove('hidden'); gallery.classList.remove('active'); }
         }
 
-        const renderMember = (m) => `<div class="member-card"><div class="member-img-box flex items-center justify-center text-slate-200"><i class="fas fa-image text-4xl"></i></div><div class="member-info"><h4 class="font-black text-xs mb-1 text-left">${m.name}</h4><p class="text-[8px] text-[#f27eb7] font-bold mb-2 text-left">${m.role}</p><p class="text-[9px] text-slate-500 leading-relaxed text-left">${m.comment}</p></div></div>`;
-        const groups = { "group-1": [{name:"ゆみよ",role:"母",comment:"今回の旅の主役"},{name:"あさみ",role:"長女",comment:"頼りになるぅ"}], "group-2": [{name:"たかお",role:"次女夫",comment:"★テキスト★"}] };
-        Object.entries(groups).forEach(([id, members]) => { const container = document.getElementById(id); if(container) container.innerHTML = members.map(renderMember).join(''); });
+        // メンバーレンダリング機能
+        const renderMember = (m) => `
+            <div class="member-card">
+                <div class="member-img-box flex items-center justify-center text-slate-200"><i class="fas fa-image text-4xl"></i></div>
+                <div class="member-info">
+                    <h4 class="font-black text-xs mb-1 text-left">${m.name}</h4>
+                    <p class="text-[8px] text-[#f27eb7] font-bold mb-2 text-left">${m.role}</p>
+                    <p class="text-[9px] text-slate-500 leading-relaxed text-left">${m.comment}</p>
+                </div>
+            </div>`;
+
+        const groups = {
+            "group-1": [{name:"ゆみよ",role:"母・主役",comment:"還暦おめでとう！"},{name:"あさみ",role:"長女",comment:"企画や準備を率先"},{name:"みな",role:"次女",comment:"ちょっと不幸を引きがち"},{name:"なつみ",role:"三女",comment:"2026年厄年"}],
+            "group-2": [{name:"たかお",role:"次女夫",comment:"みなに負けないで"},{name:"はるたか",role:"次女長男",comment:"マイクラの天才"},{name:"ひろたか",role:"次女次男",comment:"ムチムチ"},{name:"ゆきと",role:"長女息子",comment:"よだれ"}],
+            "group-3-active": [{name:"歌舞伎丸",role:"お留守番",comment:"規格外のデブ"},{name:"茶々丸",role:"お留守番",comment:"食いしん坊"}],
+            "group-3-passed": [{name:"にゃんた",role:"故猫",comment:"優しい天才"},{name:"なお様",role:"故猫",comment:"永遠の美人"},{name:"アリス",role:"故猫",comment:"なつみ大好き天才ちゃん"},{name:"あずき",role:"故猫",comment:"人の上に乗るのが好き"}],
+            "group-4": [{name:"かずお",role:"父",comment:"いつも見てます（？）"}]
+        };
+
+        Object.entries(groups).forEach(([id, members]) => { 
+            const container = document.getElementById(id);
+            if(container) container.innerHTML = members.map(renderMember).join(''); 
+        });
 
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('back-to-top');
