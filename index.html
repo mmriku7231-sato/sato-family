@@ -8,8 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome (アイコン) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts (丸ゴシック) -->
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Noto Sans JP と Zen Maru Gothic を読み込み) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
     <!-- Splide CSS & AutoScroll Extension (スライダー用) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
     <style>
@@ -24,7 +24,7 @@
         }
 
         body {
-            font-family: 'Zen Maru Gothic', sans-serif;
+            font-family: 'Noto Sans JP', sans-serif; /* 基本は Noto Sans JP */
             background-color: var(--soft-bg);
             color: var(--text-dark);
             scroll-behavior: smooth;
@@ -132,6 +132,7 @@
             pointer-events: none;
         }
         .fv-title {
+            font-family: 'Zen Maru Gothic', sans-serif; /* タイトルのみ Zen丸ゴシックを適用 */
             font-size: 2.4rem;
             font-weight: 900;
             color: white;
@@ -153,14 +154,14 @@
             box-shadow: 0 4px 15px rgba(148, 223, 246, 0.15);
         }
 
-        /* --- 見出し H2 (マージン拡大) --- */
+        /* --- 見出し H2 (マージン55px) --- */
         h2 {
             font-size: 1.6rem;
             font-weight: 900;
             text-align: center;
             position: relative;
             padding-bottom: 12px;
-            margin-bottom: 55px !important; /* 余裕のある余白 */
+            margin-bottom: 55px !important; 
             color: var(--text-dark);
             background: transparent !important;
         }
@@ -187,12 +188,31 @@
         .day-1-active #tab-1 { background-color: var(--primary-light); color: white; border-color: var(--primary-light); transform: translateY(-3px); }
         .day-2-active { background-color: #fff0f6; }
         .day-2-active #tab-2 { background-color: var(--accent-pink); color: white; border-color: var(--accent-pink); transform: translateY(-3px); }
-        .day-3-active { background-color: #f8fafc; }
+        .day-3-active { background-color: #f1f5f9; }
         .day-3-active #tab-3 { background-color: #94a3b8; color: white; border-color: #94a3b8; transform: translateY(-3px); }
 
         .schedule-content { display: none; }
         .schedule-content.active { display: block; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- マップリンクボタン --- */
+        .map-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #2563eb;
+            text-decoration: none;
+            margin-top: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .map-link-btn:active { transform: scale(0.95); background: #f8fafc; }
 
         /* --- メンバーカード --- */
         .member-card {
@@ -222,7 +242,6 @@
             color: #ccc;
         }
 
-        /* ギャラリーモード表示制御 */
         #main-content.hidden { display: none; }
         #gallery-page { display: none; }
         #gallery-page.active { display: block; }
@@ -230,13 +249,11 @@
 </head>
 <body class="max-w-md mx-auto">
 
-    <!-- TOPへもどるボタン -->
     <a href="#top" id="back-to-top">
         <i class="fas fa-chevron-up"></i>
         <span class="text-[8px] font-bold">TOP</span>
     </a>
 
-    <!-- メインコンテンツ (LP) -->
     <div id="main-content">
         <nav class="sticky-nav flex justify-around py-3 px-4">
             <a href="#schedule-section" class="text-[11px] font-bold hover:text-pink-400">旅の予定</a>
@@ -247,11 +264,10 @@
 
         <header id="top" class="fv-container">
             <div class="fv-title-area">
-                <div class="inline-block bg-red-500 text-white text-[10px] font-black px-6 py-1 rounded-full mb-4 shadow-md pointer-events-auto animate-bounce">祝・還暦</div>
-                <h1 class="fv-title italic">祝！ゆみよ還暦<br><span class="text-xl tracking-[0.2em] -mt-2 block not-italic">三姉妹プレゼンツ</span></h1>
+                <div class="inline-block bg-red-500 text-white text-[10px] font-black px-6 py-1 rounded-full mb-4 shadow-md pointer-events-auto animate-bounce">in香川</div>
+                <h1 class="fv-title italic">祝！還暦旅行<br><span class="text-xl tracking-[0.2em] -mt-2 block not-italic">左藤3姉妹プレゼンツ</span></h1>
             </div>
 
-            <!-- スライダーエリア -->
             <div id="slider_fv" class="splide">
                 <div class="splide__track">
                     <ul class="splide__list">
@@ -274,17 +290,17 @@
         <!-- 自作ロゴ設置エリア -->
         <section class="py-16 bg-white text-center px-6">
             <div class="fade-up-trigger flex flex-col items-center justify-center">
-                <div class="w-64 h-32 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl flex items-center justify-center text-slate-400">
-                    <p class="text-xs font-bold uppercase tracking-widest text-center">
+                <div class="w-64 h-32 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl flex items-center justify-center text-slate-400 text-center">
+                    <p class="text-xs font-bold uppercase tracking-widest">
                         <i class="fas fa-image text-2xl mb-2 block"></i>
-                        作成したロゴ画像を<br>ここに設置！
+                        作成したロゴ画像
                     </p>
                 </div>
                 <p class="text-[10px] mt-4 font-bold tracking-[0.3em] text-slate-300 text-center">2026.05.21 - 23 IN KAGAWA</p>
             </div>
         </section>
 
-        <!-- LINE風メッセージのやり取り -->
+        <!-- LINEトーク画面 -->
         <section class="px-6 py-12 bg-white">
             <div class="line-chat-container">
                 <div class="chat-row">
@@ -293,7 +309,7 @@
                         <span class="chat-name">あさみ</span>
                         <div class="chat-bubble">お母さん還暦おめでとう！🎂</div>
                     </div>
-                    <div class="chat-meta">既読<br>11:03</div>
+                    <div class="chat-meta">既読<br>08:04</div>
                 </div>
                 <div class="chat-row">
                     <div class="chat-icon">み</div>
@@ -301,15 +317,15 @@
                         <span class="chat-name">みな</span>
                         <div class="chat-bubble">左藤家に生まれ、育ててもらって恩として、感謝のおもてなし旅行をプレゼントします！🎁</div>
                     </div>
-                    <div class="chat-meta">既読<br>11:03</div>
+                    <div class="chat-meta">既読<br>01:21</div>
                 </div>
                 <div class="chat-row">
                     <div class="chat-icon">な</div>
                     <div class="chat-content">
                         <span class="chat-name">なつみ</span>
-                        <div class="chat-bubble">いつもにゃんずのお世話と孫たちと遊んでくれてありがとう！思う存分に満喫してね！✨</div>
+                        <div class="chat-bubble">いつもにゃんずのお世話と孫たちと遊んでくれてありがとう！思う存分に満喫してね！</div>
                     </div>
-                    <div class="chat-meta">既読<br>11:04</div>
+                    <div class="chat-meta">既読<br>09:21</div>
                 </div>
             </div>
         </section>
@@ -330,56 +346,121 @@
                         <div class="bg-white/50 p-4 rounded-2xl mb-6 border border-white/50 text-[10px] text-amber-600 font-bold flex items-center gap-1">
                             <i class="fas fa-car-side"></i> 与那原家は別移動となります
                         </div>
-                        <div class="space-y-8 text-sm">
-                            <div class="flex gap-4"><span class="font-black text-sky-500">09:00</span> <p class="font-bold">別府湾出航 ⛴️</p></div>
-                            <div class="flex gap-4"><span class="font-black text-sky-500">11:00</span> <p class="font-bold">愛媛到着 / 松山でランチ 🍱</p></div>
-                            <div class="flex gap-4">
-                                <span class="font-black text-sky-500">14:00</span>
-                                <div class="flex-1 text-center">
-                                    <p class="font-bold mb-3 underline decoration-sky-300 decoration-4">四国水族館 🐬</p>
-                                    <div class="rounded-2xl overflow-hidden border-2 border-white shadow-md">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3294.634!2d133.772591!3d34.321685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553934372555555%3A0x6b490f9686000000!2z5Zub5Zu95rC05peP6aSo!5e0!3m2!1sja!2sjp!4v1715600000000" width="100%" height="150" style="border:0;" loading="lazy"></iframe>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="space-y-6 text-sm text-left">
+                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">07:30</span> <p class="font-bold">なつみアパート出発</p></div>
+                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">09:00</span> <p class="font-bold">大分・佐賀関港 出発 ⛴️<br><small class="opacity-60 text-[10px]">九四フェリーで愛媛へ</small></p></div>
+                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">10:10</span> <p class="font-bold">愛媛・三崎港 到着</p></div>
+                            
                             <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-sky-500">17:00</span>
-                                <div class="flex-1 text-center">
-                                    <p class="font-bold text-slate-700 mb-2">リブマックスリゾート讃岐塩江温泉</p>
-                                    <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3301.6409493827273!2d134.1010420759884!3d34.155526973118285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553b885a9525485%3A0x643d916fa4c249b9!2z44Oq44OW44Oe44OD44Kv44K544Oq44K-44O844OI6K6D5bKQ5aGp5rGf5rip5rOJ!5e0!3m2!1sja!2sjp!4v1772716480452!5m2!1sja!2sjp" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                <span class="font-black text-sky-500 w-12">11:30</span>
+                                <div class="flex-1">
+                                    <p class="font-bold underline decoration-sky-300 decoration-4">ランチ：大洲炉端 油屋 🍱</p>
+                                    <a href="https://maps.app.goo.gl/JrAbA9cdpnVECxB49" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">12:45</span> 
+                                <div class="flex-1">
+                                    <p class="font-bold">大洲城・城下町 散策 🏯</p>
+                                    <a href="https://maps.app.goo.gl/2RrsF3iNDA8tUsz1A" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-4 pt-4 border-t border-white/30">
+                                <span class="font-black text-sky-500 w-12">16:30</span>
+                                <div class="flex-1">
+                                    <p class="font-bold underline decoration-sky-300 decoration-4">うどんバカ一代 🍜</p>
+                                    <p class="text-[10px] opacity-70 mt-1">高松の人気店！本場の讃岐うどん。</p>
+                                    <a href="https://maps.app.goo.gl/Bp9Vj41dLnvYjrPp8" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-4 pt-4 border-t border-white/30">
+                                <span class="font-black text-sky-500 w-12">18:00</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-slate-700">リブマックスリゾート讃岐塩江 チェックイン ♨️</p>
+                                    <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white h-[150px] mt-2">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3301.6409493827273!2d134.1010420759884!3d34.155526973118285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553b885a9525485%3A0x643d916fa4c249b9!2z44Oq44OW44Oe44OD44Kv44K544Oq44K-44O844OI6K6D5bKQ5aGp5rGf5rip5rOJ!5e0!3m2!1sja!2sjp!4v1772716480452!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                                     </div>
                                 </div>
                             </div>
+                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">19:00</span> <p class="font-bold">夕食バイキング 🍴</p></div>
                         </div>
                     </div>
 
                     <!-- Day 2 Content -->
                     <div id="day-2" class="schedule-content">
-                        <div class="space-y-8 text-sm">
-                            <div class="flex gap-4">
-                                <span class="font-black text-pink-500">09:00</span>
-                                <div class="flex-1 text-center">
-                                    <p class="font-bold mb-1 underline decoration-pink-300 decoration-4">金刀比羅宮 参拝 ⛩️</p>
-                                    <p class="text-[10px] text-slate-400 mb-3 italic">往復3時間予定。785段踏破！</p>
+                        <div class="space-y-6 text-sm text-left">
+                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">07:15</span> <p class="font-bold">朝食バイキング</p></div>
+                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">08:30</span> <p class="font-bold">宿（塩江）出発 🚗</p></div>
+                            <div class="flex gap-4 pt-4 border-t border-white/30">
+                                <span class="font-black text-pink-500 w-12">09:30</span>
+                                <div class="flex-1">
+                                    <p class="font-bold underline decoration-pink-300 decoration-4 text-pink-600">金刀比羅宮 参拝開始 ⛩️</p>
+                                    <p class="text-[11px] font-bold mt-1">785段の御本宮を目指します！</p>
+                                    <a href="https://maps.app.goo.gl/HQYQf6X143mAWhy67" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
                                 </div>
                             </div>
+                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">11:30</span> <p class="font-bold">大門（365段目）からタクシーで下山 🚕</p></div>
                             <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-pink-500">17:00</span>
-                                <div class="flex-1 text-center">
-                                    <p class="font-bold text-slate-700 mb-2">湯元こんぴら温泉華の湯 紅梅亭</p>
-                                    <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3300.2489992945857!2d133.81441087572242!3d34.19111387310499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553d6439e091ef7%3A0x5c5e3bf9d73de2c6!2z5rmv5YWD44GT44KT44G044KJ5rip5rOJ6I-v44Gu5rmvIOe0heaiheS6rQ!5e0!3m2!1sja!2sjp!4v1772716423154!5m2!1sja!2sjp" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                <span class="font-black text-pink-500 w-12">12:30</span>
+                                <div class="flex-1">
+                                    <p class="font-bold">ランチタイム（候補） 🥢</p>
+                                    <div class="flex flex-wrap gap-2 mt-2">
+                                        <a href="https://maps.app.goo.gl/27XMZqMZQ2ABqrEg7" target="_blank" class="map-link-btn">Cafe 森と山</a>
+                                        <a href="https://maps.app.goo.gl/cYWNHsmTE1TdCEiG6" target="_blank" class="map-link-btn">こんぴらうどん</a>
+                                        <a href="https://maps.app.goo.gl/iJ2ScecmeVgFTPDYA" target="_blank" class="map-link-btn">つるだや</a>
                                     </div>
                                 </div>
                             </div>
+                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">14:00</span> <p class="font-bold">門前町散策・お土産 🛍️</p></div>
+                            <div class="flex gap-4 pt-4 border-t border-white/30">
+                                <span class="font-black text-pink-500 w-12">15:30</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-slate-700">華の湯 紅梅亭 チェックイン ♨️</p>
+                                    <a href="https://maps.app.goo.gl/st43uXZtg3iHXrad9" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                                    <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white h-[150px] mt-2">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3300.2489992945857!2d133.81441087572242!3d34.19111387310499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553d6439e091ef7%3A0x5c5e3bf9d73de2c6!2z5rmv5YWD44GT44KT44G044KJ5rip5rOJ6I-v44Gu5rmvIOe0heaiheS6rQ!5e0!3m2!1sja!2sjp!4v1772716423154!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">18:00</span> <p class="font-bold">夕食バイキング 🍴</p></div>
                         </div>
                     </div>
 
-                    <!-- Day 3 Content -->
+                    <!-- Day 3 -->
                     <div id="day-3" class="schedule-content">
-                        <div class="py-10 text-center text-slate-500 font-bold">
-                            <p>愛媛 → 別府へ ⛴️<br>最高の思い出を胸に帰りましょう！</p>
+                        <div class="space-y-6 text-sm text-left">
+                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">07:15</span> <p class="font-bold">朝食バイキング</p></div>
+                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">08:30</span> <p class="font-bold">紅梅亭 出発</p></div>
+                            <div class="flex gap-4 pt-4 border-t border-white/30">
+                                <span class="font-black text-slate-500 w-12">09:00</span>
+                                <div class="flex-1">
+                                    <p class="font-bold underline decoration-slate-300 decoration-4">四国水族館 🐬</p>
+                                    <a href="https://maps.app.goo.gl/Ky8pkdvm1LSdBy1g9" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 pt-4 border-t border-white/30">
+                                <span class="font-black text-slate-500 w-12">11:00</span>
+                                <div class="flex-1">
+                                    <p class="font-bold underline decoration-slate-300 decoration-4 text-slate-600">うどん おか泉 🍜</p>
+                                    <div class="flex flex-wrap gap-2 mt-2">
+                                        <a href="https://maps.app.goo.gl/SqwcuPSvD5N5FuSJ6" target="_blank" class="map-link-btn">おか泉</a>
+                                        <a href="https://maps.app.goo.gl/uY7vNR8FSPCbWKHn6" target="_blank" class="map-link-btn">瀬戸晴れ</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 pt-4 border-t border-slate-300/30">
+                                <span class="font-black text-red-500 w-12">13:00</span>
+                                <div class="flex-1 bg-red-50 p-3 rounded-xl border border-red-100 text-center">
+                                    <p class="font-bold text-red-600">与那原家と解散 (;_;)/~</p>
+                                    <p class="text-[10px] text-red-400 mt-1">坂出IC付近。大分組は三崎港へ直行！</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">16:00</span> <p class="font-bold">愛媛・三崎港 到着</p></div>
+                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">17:00</span> <p class="font-bold text-red-600">三崎港 出港 ⛴️（厳守！）</p></div>
+                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">18:10</span> <p class="font-bold">大分・佐賀関 到着</p></div>
+                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">19:00</span> <p class="font-bold">なつみアパート到着 お疲れ様！ 🏠</p></div>
                         </div>
                     </div>
                 </div>
@@ -390,44 +471,18 @@
         <section id="members" class="px-6 py-20 bg-white">
             <h2>メンバー紹介</h2>
             <div class="space-y-12">
-                <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#94DFF6] pl-3 text-slate-500 text-left">左藤の意思を継ぐもの</h3><div id="group-1"></div></div>
-                <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#f27eb7] pl-3 text-slate-500 text-left">スペシャルゲスト</h3><div id="group-2"></div></div>
+                <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#94DFF6] pl-3 text-slate-500 text-left">左藤の意思を継ぐもの</h3><div id="group-1" class="grid grid-cols-1 gap-4"></div></div>
+                <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#f27eb7] pl-3 text-slate-500 text-left">スペシャルゲスト</h3><div id="group-2" class="grid grid-cols-1 gap-4"></div></div>
                 <div>
-                    <h3 class="font-black text-xs mb-4 border-l-4 border-amber-400 pl-3 text-amber-600 text-left">お留守番にゃんこ</h3><div id="group-3-active"></div>
-                    <h3 class="font-black text-[10px] mt-8 mb-4 bg-slate-50 p-2 rounded text-center text-slate-400">他界にゃんこ</h3><div id="group-3-passed"></div>
+                    <h3 class="font-black text-xs mb-4 border-l-4 border-amber-400 pl-3 text-amber-600 text-left">お留守番にゃんこ</h3><div id="group-3-active" class="grid grid-cols-1 gap-4"></div>
+                    <h3 class="font-black text-[10px] mt-8 mb-4 bg-slate-50 p-2 rounded text-center text-slate-400">他界にゃんこ</h3><div id="group-3-passed" class="grid grid-cols-1 gap-4"></div>
                 </div>
-                <div><h3 class="font-black text-xs mb-4 border-l-4 border-slate-300 pl-3 text-slate-400 text-left">スペシャルメンバー</h3><div id="group-4"></div></div>
+                <div><h3 class="font-black text-xs mb-4 border-l-4 border-slate-300 pl-3 text-slate-400 text-left">スペシャルメンバー</h3><div id="group-4" class="grid grid-cols-1 gap-4"></div></div>
             </div>
-
-            <!-- メンバーカード生成JS -->
-            <script>
-                const renderMember = (m) => `
-                    <div class="member-card">
-                        <div class="member-img-box flex items-center justify-center text-slate-200"><i class="fas fa-image text-4xl"></i></div>
-                        <div class="member-info">
-                            <h4 class="font-black text-xs mb-1 text-left">${m.name}</h4>
-                            <p class="text-[8px] text-[#f27eb7] font-bold mb-2 text-left">${m.role}</p>
-                            <p class="text-[9px] text-slate-500 leading-relaxed text-left">${m.comment}</p>
-                        </div>
-                    </div>`;
-                const groups = {
-                    "group-1": [{name:"ゆみよ",role:"母・主役",comment:"★テキスト★"},{name:"あさみ",role:"長女",comment:"★テキスト★"},{name:"みな",role:"次女",comment:"★テキスト★"},{name:"なつみ",role:"三女",comment:"★テキスト★"}],
-                    "group-2": [{name:"たかお",role:"次女夫",comment:"★テキスト★"},{name:"はるたか",role:"次女長男",comment:"★テキスト★"},{name:"ひろたか",role:"次女次男",comment:"★テキスト★"},{name:"ゆきと",role:"長女息子",comment:"★テキスト★"}],
-                    "group-3-active": [{name:"歌舞伎丸",role:"お留守番",comment:"★テキスト★"},{name:"茶々丸",role:"お留守番",comment:"★テキスト★"}],
-                    "group-3-passed": [{name:"にゃんた",role:"虹の橋",comment:"★テキスト★"},{name:"なお様",role:"虹の橋",comment:"★テキスト★"},{name:"アリス",role:"虹の橋",comment:"★テキスト★"},{name:"あずき",role:"虹の橋",comment:"★テキスト★"}],
-                    "group-4": [{name:"かずお",role:"父・見守り担当",comment:"★テキスト★"}]
-                };
-                Object.entries(groups).forEach(([id, members]) => { 
-                    const container = document.getElementById(id);
-                    if(container) container.innerHTML = members.map(renderMember).join(''); 
-                });
-            </script>
-
-            <!-- ギャラリー導線バナー -->
             <div onclick="toggleGallery(true)" class="mt-20 bg-[#2b508c] text-white p-10 rounded-[40px] text-center cursor-pointer hover:opacity-90 transition shadow-xl">
                 <i class="fas fa-camera-retro text-4xl mb-4 text-white"></i>
-                <h3 class="text-xl font-black mb-1">旅の記録はこちら</h3>
-                <p class="text-[10px] opacity-60 uppercase tracking-widest font-bold">Memory Gallery</p>
+                <h3 class="text-xl font-black mb-1 text-center">旅の記録はこちら</h3>
+                <p class="text-[10px] opacity-60 uppercase tracking-widest font-bold text-center">Memory Gallery</p>
             </div>
         </section>
 
@@ -463,22 +518,22 @@
         </section>
 
         <footer class="bg-slate-900 text-white p-16 text-center">
-            <p class="text-xl font-black italic mb-4">Have a nice trip!</p>
+            <p class="text-xl font-black italic mb-4 tracking-tighter text-center">Have a nice trip!</p>
             <div class="w-12 h-1 bg-[#f27eb7] mx-auto mb-8"></div>
-            <p class="text-[10px] opacity-40 uppercase tracking-[0.3em]">Left Three Sisters Presents</p>
-            <p class="text-[8px] opacity-20 mt-8">Special Thanks: KAZUO</p>
+            <p class="text-[10px] opacity-40 uppercase tracking-[0.3em] text-center">Left Three Sisters Presents</p>
+            <p class="text-[8px] opacity-20 mt-8 italic text-center">Special Thanks: KAZUO</p>
         </footer>
     </div>
 
-    <!-- ギャラリーページ (別画面扱い) -->
+    <!-- ギャラリーページ -->
     <div id="gallery-page" class="min-h-screen bg-white p-8">
         <button onclick="toggleGallery(false)" class="text-slate-400 mb-10 flex items-center font-bold">
             <i class="fas fa-arrow-left mr-3"></i> もどる
         </button>
         <div class="text-center py-40">
             <i class="fas fa-images text-7xl text-pink-50 mb-6"></i>
-            <h2 class="text-2xl font-black mb-4">写真準備中・・・</h2>
-            <p class="text-sm text-slate-400">旅が終わったら、素敵な家族写真を<br>ここにたくさん詰め込みましょう！</p>
+            <h2 class="text-2xl font-black mb-4 text-center">写真準備中・・・</h2>
+            <p class="text-sm text-slate-400 text-center">旅が終わったら、素敵な家族写真を<br>ここにたくさん詰め込みましょう！</p>
         </div>
     </div>
 
@@ -495,9 +550,7 @@
 
             // スクロール時のフェードアップアニメーション
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('visible');
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
             }, { threshold: 0.2 });
             document.querySelectorAll('.fade-up-trigger').forEach(el => observer.observe(el));
         });
@@ -531,6 +584,28 @@
                 gallery.classList.remove('active');
             }
         }
+
+        // メンバーカード生成
+        const renderMember = (m) => `
+            <div class="member-card">
+                <div class="member-img-box flex items-center justify-center text-slate-200"><i class="fas fa-image text-4xl"></i></div>
+                <div class="member-info">
+                    <h4 class="font-black text-xs mb-1 text-left">${m.name}</h4>
+                    <p class="text-[8px] text-[#f27eb7] font-bold mb-2 text-left">${m.role}</p>
+                    <p class="text-[9px] text-slate-500 leading-relaxed text-left">${m.comment}</p>
+                </div>
+            </div>`;
+        const groups = {
+            "group-1": [{name:"ゆみよ",role:"母・主役",comment:"★テキスト★"},{name:"あさみ",role:"長女",comment:"★テキスト★"},{name:"みな",role:"次女",comment:"★テキスト★"},{name:"なつみ",role:"三女",comment:"★テキスト★"}],
+            "group-2": [{name:"たかお",role:"次女夫",comment:"★テキスト★"},{name:"はるたか",role:"次女長男",comment:"★テキスト★"},{name:"ひろたか",role:"次女次男",comment:"★テキスト★"},{name:"ゆきと",role:"長女息子",comment:"★テキスト★"}],
+            "group-3-active": [{name:"歌舞伎丸",role:"お留守番",comment:"★テキスト★"},{name:"茶々丸",role:"お留守番",comment:"★テキスト★"}],
+            "group-3-passed": [{name:"にゃんた",role:"虹の橋",comment:"★テキスト★"},{name:"なお様",role:"虹の橋",comment:"★テキスト★"},{name:"アリス",role:"虹の橋",comment:"★テキスト★"},{name:"あずき",role:"虹の橋",comment:"★テキスト★"}],
+            "group-4": [{name:"かずお",role:"父・見守り担当",comment:"★テキスト★"}]
+        };
+        Object.entries(groups).forEach(([id, members]) => { 
+            const el = document.getElementById(id);
+            if(el) el.innerHTML = members.map(renderMember).join(''); 
+        });
     </script>
 </body>
 </html>
