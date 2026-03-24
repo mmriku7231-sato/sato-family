@@ -8,9 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome (アイコン) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts (Noto Sans JP と Zen Maru Gothic を読み込み) -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- Splide CSS & AutoScroll Extension (スライダー用) -->
+    <!-- Splide CSS & AutoScroll Extension -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
     <style>
         :root {
@@ -19,97 +19,17 @@
             --gallery-blue: #2b508c;  /* ギャラリー背景 */
             --soft-bg: #fdfbf7;       /* 全体背景 */
             --text-dark: #4a5568;
-            --line-green: #06C755;    /* LINEブランドカラー */
-            --line-bg: #8b9cb5;       /* LINEトーク背景 */
+            --line-bg: #8b9cb5;
         }
 
         body {
-            font-family: 'Noto Sans JP', sans-serif; /* 基本は Noto Sans JP */
+            font-family: 'Noto Sans JP', sans-serif;
             background-color: var(--soft-bg);
             color: var(--text-dark);
             scroll-behavior: smooth;
         }
 
-        /* --- アニメーション --- */
-        .fade-up-trigger {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
-        }
-        .fade-up-trigger.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- LINEトーク画面 --- */
-        .line-chat-container {
-            background-color: var(--line-bg);
-            border-radius: 30px;
-            padding: 25px 15px;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .chat-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .chat-icon {
-            width: 35px;
-            height: 35px;
-            background-color: #eee;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 900;
-            color: #777;
-            flex-shrink: 0;
-            border: 1px solid #fff;
-        }
-        .chat-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            max-width: 75%;
-        }
-        .chat-name {
-            font-size: 10px;
-            font-weight: 900;
-            color: #ffffff;
-            margin-left: 2px;
-        }
-        .chat-bubble {
-            position: relative;
-            background: #ffffff;
-            border-radius: 0 15px 15px 15px;
-            padding: 10px 14px;
-            font-size: 13px;
-            font-weight: 700;
-            line-height: 1.5;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .chat-bubble::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -10px;
-            border-style: solid;
-            border-width: 0 12px 12px 0;
-            border-color: transparent #ffffff transparent transparent;
-        }
-        .chat-meta {
-            display: flex;
-            align-items: flex-end;
-            margin-left: 5px;
-            font-size: 9px;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: bold;
-        }
-
-        /* --- ファーストビュー (FV) --- */
+        /* --- FVタイトル中央揃え --- */
         .fv-container {
             position: relative;
             width: 100%;
@@ -117,134 +37,134 @@
             overflow: hidden;
             background: #fff;
         }
-        .splide__slide { padding: 5px; }
-        .collage-item { width: 100%; height: 65vh; display: flex; gap: 10px; }
-        .collage-img { border-radius: 20px; object-fit: cover; width: 100%; height: 100%; }
-
         .fv-title-area {
             position: absolute;
-            top: 45%;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); /* 完全に中央寄せ */
             z-index: 50;
             width: 100%;
             text-align: center;
             pointer-events: none;
         }
         .fv-title {
-            font-family: 'Zen Maru Gothic', sans-serif; /* タイトルのみ Zen丸ゴシックを適用 */
-            font-size: 2.4rem;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            font-size: 2.6rem;
             font-weight: 900;
             color: white;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
             -webkit-text-stroke: 1px var(--accent-pink);
             letter-spacing: -0.02em;
+            line-height: 1.2;
         }
 
-        /* --- ナビゲーション --- */
-        .sticky-nav {
-            position: sticky;
-            top: 15px;
-            margin: 0 15px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(8px);
-            border-radius: 50px;
-            z-index: 100;
-            border: 1px solid var(--primary-light);
-            box-shadow: 0 4px 15px rgba(148, 223, 246, 0.15);
-        }
+        /* --- アニメーション --- */
+        .fade-up-trigger { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .fade-up-trigger.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- 見出し H2 (マージン55px) --- */
-        h2 {
-            font-size: 1.6rem;
-            font-weight: 900;
-            text-align: center;
-            position: relative;
-            padding-bottom: 12px;
-            margin-bottom: 55px !important; 
-            color: var(--text-dark);
-            background: transparent !important;
-        }
-        h2::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 45px;
-            height: 4px;
-            background-color: var(--primary-light);
-            border-radius: 10px;
-        }
+        /* --- LINEトーク --- */
+        .line-chat-container { background-color: var(--line-bg); border-radius: 30px; padding: 25px 15px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.1); }
+        .chat-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
+        .chat-icon { width: 38px; height: 38px; background-color: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #777; border: 1.5px solid #fff; flex-shrink: 0; line-height: 1; }
+        .chat-content { display: flex; flex-direction: column; gap: 4px; max-width: 75%; }
+        .chat-name { font-size: 10px; font-weight: 900; color: #ffffff; }
+        .chat-bubble { position: relative; background: #ffffff; border-radius: 0 15px 15px 15px; padding: 10px 14px; font-size: 13px; font-weight: 700; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .chat-bubble::before { content: ""; position: absolute; top: 0; left: -10px; border-style: solid; border-width: 0 12px 12px 0; border-color: transparent #ffffff transparent transparent; }
 
-        /* --- スケジュール コンテナ --- */
-        .schedule-box {
-            border-radius: 45px;
-            transition: background-color 0.5s ease;
-            padding: 30px 20px 45px 20px;
+        /* --- 導入文のデコ素材 --- */
+        .sec_intro { padding: 60px 20px; text-align: center; position: relative; }
+        .sec_intro .txt { display: inline-block; line-height: 2.4; font-weight: 700; font-size: 15px; color: #555; position: relative; z-index: 2; }
+        .sec_intro .highlight { background: linear-gradient(transparent 60%, rgba(255, 235, 59, 0.6) 60%); padding: 0 4px; }
+        .intro-deco { position: absolute; pointer-events: none; opacity: 0.15; z-index: 1; }
+        .intro-deco-1 { top: 10px; left: 10%; transform: rotate(-15deg); font-size: 3rem; color: var(--primary-light); }
+        .intro-deco-2 { bottom: 10px; right: 10%; transform: rotate(15deg); font-size: 3.5rem; color: var(--accent-pink); }
+
+        /* --- スケジュールリッチレイアウト --- */
+        .schedule-box { border-radius: 45px; padding: 30px 15px 45px 15px; transition: background-color 0.5s ease; }
+        
+        .area_item { position: relative; background: #fff; border-radius: 24px; margin-bottom: 25px; padding: 25px 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.03); }
+        .area_item .time { position: absolute; top: -12px; left: 20px; background: var(--text-dark); color: #fff; padding: 2px 15px; border-radius: 20px; font-size: 12px; font-weight: 900; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .area_item .stay-time { display: inline-block; margin-bottom: 8px; font-size: 10px; font-weight: 900; color: #fff; background: var(--accent-pink); padding: 1px 10px; border-radius: 4px; }
+        
+        /* スケジュール内のタイトルと画像枠の間の距離を最適化 */
+        .area_item .ttl { 
+            font-size: 1.25rem; 
+            font-weight: 900; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            margin-bottom: 2px !important; /* 最小限の距離に設定 */
+            color: #333; 
         }
-        .tab-btn { transition: all 0.3s ease; background: white; }
+        
+        .area_item .body { font-size: 13px; line-height: 1.7; color: #555; margin-bottom: 15px; font-weight: 500; text-align: left; }
+        
+        /* スケジュール内のタイトル下線を削除 */
+        .area_item h2::after { display: none !important; }
+
+        /* 画像はめ込み枠 (アスペクト比16:9) */
+        .spot-photo-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            margin-top: 8px; /* 少しだけ上に隙間を空ける */
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #e2e8f0;
+        }
+        .spot-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 地図ボタン */
+        .map-link-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px; background: #f8fafc; border: 2px solid var(--primary-light);
+            padding: 10px; border-radius: 15px; font-size: 12px; font-weight: 900; color: var(--text-dark);
+            text-decoration: none; transition: 0.2s; margin-top: 8px; width: 100%;
+        }
+        .map-link-btn:active { background: var(--primary-light); color: white; transform: scale(0.98); }
+
+        /* 移動指示 (矢印あり) */
+        .traffic { display: flex; flex-direction: column; align-items: center; padding: 10px 0 25px 0; color: #555; font-weight: 900; font-size: 12px; gap: 4px; }
+
+        /* 日程カラー連動 */
         .day-1-active { background-color: #eafaff; }
-        .day-1-active #tab-1 { background-color: var(--primary-light); color: white; border-color: var(--primary-light); transform: translateY(-3px); }
-        .day-2-active { background-color: #fff0f6; }
-        .day-2-active #tab-2 { background-color: var(--accent-pink); color: white; border-color: var(--accent-pink); transform: translateY(-3px); }
-        .day-3-active { background-color: #f1f5f9; }
-        .day-3-active #tab-3 { background-color: #94a3b8; color: white; border-color: #94a3b8; transform: translateY(-3px); }
+        .day-1-active #tab-1 { background-color: var(--primary-light); color: white; border-color: var(--primary-light); }
+        .day-1-active .traffic { color: #0284c7; }
 
+        .day-2-active { background-color: #fff0f6; }
+        .day-2-active #tab-2 { background-color: var(--accent-pink); color: white; border-color: var(--accent-pink); }
+        .day-2-active .traffic { color: #be185d; }
+
+        .day-3-active { background-color: #f1f5f9; }
+        .day-3-active #tab-3 { background-color: #94a3b8; color: white; border-color: #94a3b8; }
+        .day-3-active .traffic { color: #475569; }
+
+        .tab-btn { transition: all 0.3s ease; background: white; }
         .schedule-content { display: none; }
         .schedule-content.active { display: block; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- マップリンクボタン --- */
-        .map-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #fff;
-            border: 1px solid #ddd;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            color: #2563eb;
-            text-decoration: none;
-            margin-top: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: 0.2s;
-        }
-        .map-link-btn:active { transform: scale(0.95); background: #f8fafc; }
+        /* --- ナビ & その他 --- */
+        .sticky-nav { position: sticky; top: 15px; margin: 0 15px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border-radius: 50px; z-index: 100; border: 1px solid var(--primary-light); box-shadow: 0 4px 15px rgba(148, 223, 246, 0.2); }
+        
+        /* セクション全体の見出し */
+        h2 { font-size: 1.6rem; font-weight: 900; text-align: center; position: relative; padding-bottom: 12px; margin-bottom: 55px !important; color: var(--text-dark); background: transparent !important; }
+        h2::after { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 45px; height: 4px; background-color: var(--primary-light); border-radius: 10px; }
 
-        /* --- メンバーカード --- */
-        .member-card {
-            display: flex;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            margin-bottom: 15px;
-            border: 1px solid #eee;
-        }
-        .member-img-box { width: 60%; aspect-ratio: 1/1; background-color: #f8fafc; }
-        .member-info { width: 40%; padding: 12px; display: flex; flex-direction: column; justify-content: center; }
-
-        /* --- その他 --- */
-        #back-to-top {
-            position: fixed; bottom: 25px; right: 20px; width: 55px; height: 55px;
-            background: var(--accent-pink); color: white; border-radius: 50%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 200; opacity: 0; pointer-events: none; transition: all 0.3s;
-            text-decoration: none;
-        }
+        #back-to-top { position: fixed; bottom: 25px; right: 20px; width: 55px; height: 55px; background: var(--accent-pink); color: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200; opacity: 0; pointer-events: none; transition: all 0.3s; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         #back-to-top.show { opacity: 1; pointer-events: auto; }
-
-        input:checked + span {
-            text-decoration: line-through;
-            color: #ccc;
-        }
-
+        
         #main-content.hidden { display: none; }
         #gallery-page { display: none; }
         #gallery-page.active { display: block; }
+        input:checked + span { text-decoration: line-through; color: #ccc; }
+
+        .member-card { display: flex; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 15px; border: 1px solid #eee; }
+        .member-img-box { width: 60%; aspect-ratio: 1/1; background-color: #f8fafc; }
+        .member-info { width: 40%; padding: 12px; display: flex; flex-direction: column; justify-content: center; }
     </style>
 </head>
 <body class="max-w-md mx-auto">
@@ -267,66 +187,46 @@
                 <div class="inline-block bg-red-500 text-white text-[10px] font-black px-6 py-1 rounded-full mb-4 shadow-md pointer-events-auto animate-bounce">in香川</div>
                 <h1 class="fv-title italic">祝！還暦旅行<br><span class="text-xl tracking-[0.2em] -mt-2 block not-italic">左藤3姉妹プレゼンツ</span></h1>
             </div>
-
             <div id="slider_fv" class="splide">
                 <div class="splide__track">
                     <ul class="splide__list">
-                        <li class="splide__slide">
-                            <div class="collage-item flex-col">
-                                <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400" class="collage-img h-1/2">
-                                <img src="https://images.unsplash.com/photo-1578469550956-0e16b69c6a3d?auto=format&fit=crop&q=80&w=400" class="collage-img h-1/2">
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="collage-item">
-                                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" class="collage-img">
-                            </div>
-                        </li>
+                        <li class="splide__slide"><div class="collage-item flex-col"><img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400" class="collage-img h-1/2"><img src="https://images.unsplash.com/photo-1578469550956-0e16b69c6a3d?auto=format&fit=crop&q=80&w=400" class="collage-img h-1/2"></div></li>
+                        <li class="splide__slide"><div class="collage-item"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800" class="collage-img"></div></li>
                     </ul>
                 </div>
             </div>
         </header>
 
-        <!-- 自作ロゴ設置エリア -->
+        <!-- ロゴ設置エリア -->
         <section class="py-16 bg-white text-center px-6">
             <div class="fade-up-trigger flex flex-col items-center justify-center">
                 <div class="w-64 h-32 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl flex items-center justify-center text-slate-400 text-center">
-                    <p class="text-xs font-bold uppercase tracking-widest">
-                        <i class="fas fa-image text-2xl mb-2 block"></i>
-                        作成したロゴ画像
-                    </p>
+                    <p class="text-xs font-bold uppercase tracking-widest"><i class="fas fa-image text-2xl mb-2 block"></i>作成したロゴ画像</p>
                 </div>
                 <p class="text-[10px] mt-4 font-bold tracking-[0.3em] text-slate-300 text-center">2026.05.21 - 23 IN KAGAWA</p>
             </div>
         </section>
 
-        <!-- LINEトーク画面 -->
+        <!-- LINEトーク -->
         <section class="px-6 py-12 bg-white">
             <div class="line-chat-container">
-                <div class="chat-row">
-                    <div class="chat-icon">あ</div>
-                    <div class="chat-content">
-                        <span class="chat-name">あさみ</span>
-                        <div class="chat-bubble">お母さん還暦おめでとう！🎂</div>
-                    </div>
-                    <div class="chat-meta">既読<br>08:04</div>
-                </div>
-                <div class="chat-row">
-                    <div class="chat-icon">み</div>
-                    <div class="chat-content">
-                        <span class="chat-name">みな</span>
-                        <div class="chat-bubble">左藤家に生まれ、育ててもらって恩として、感謝のおもてなし旅行をプレゼントします！🎁</div>
-                    </div>
-                    <div class="chat-meta">既読<br>01:21</div>
-                </div>
-                <div class="chat-row">
-                    <div class="chat-icon">な</div>
-                    <div class="chat-content">
-                        <span class="chat-name">なつみ</span>
-                        <div class="chat-bubble">いつもにゃんずのお世話と孫たちと遊んでくれてありがとう！思う存分に満喫してね！</div>
-                    </div>
-                    <div class="chat-meta">既読<br>09:21</div>
-                </div>
+                <div class="chat-row"><div class="chat-icon">あ</div><div class="chat-content"><span class="chat-name">あさみ</span><div class="chat-bubble">お母さん還暦おめでとう！🎂</div></div><div class="chat-meta text-[8px] self-end ml-1 text-white opacity-70">既読 08:04</div></div>
+                <div class="chat-row"><div class="chat-icon">み</div><div class="chat-content"><span class="chat-name">みな</span><div class="chat-bubble">左藤家に生まれ、育ててもらって恩として、感謝のおもてなし旅行をプレゼントします！🎁</div></div><div class="chat-meta text-[8px] self-end ml-1 text-white opacity-70">既読 01:21</div></div>
+                <div class="chat-row"><div class="chat-icon">な</div><div class="chat-content"><span class="chat-name">なつみ</span><div class="chat-bubble">いつもにゃんずのお世話と孫たちと遊んでくれてありがとう！思う存分に満喫してね！</div></div><div class="chat-meta text-[8px] self-end ml-1 text-white opacity-70">既読 09:21</div></div>
+            </div>
+        </section>
+
+        <!-- 導入文 -->
+        <section class="sec_intro">
+            <div class="sec_intro_inner">
+                <p class="txt">
+                    <span class="line">瀬戸内の風を感じながら、</span>
+                    <span class="line"><span class="highlight">香川をたっぷり堪能する旅</span>へ。</span>
+                    <span class="line">3姉妹が心を込めて準備した</span>
+                    <span class="line">特別なおもてなしをお楽しみください！</span>
+                </p>
+                <i class="fas fa-ship intro-deco intro-deco-1"></i>
+                <i class="fas fa-utensils intro-deco intro-deco-2"></i>
             </div>
         </section>
 
@@ -335,7 +235,7 @@
             <h2>旅の予定</h2>
             <div class="px-6">
                 <div id="schedule-container" class="schedule-box day-1-active">
-                    <div class="flex gap-2 mb-8">
+                    <div class="flex gap-2 mb-10">
                         <button onclick="switchDay(1)" id="tab-1" class="tab-btn flex-1 py-3 rounded-2xl border-2 border-slate-100 font-black text-xs shadow-sm">1日目</button>
                         <button onclick="switchDay(2)" id="tab-2" class="tab-btn flex-1 py-3 rounded-2xl border-2 border-slate-100 font-black text-xs shadow-sm">2日目</button>
                         <button onclick="switchDay(3)" id="tab-3" class="tab-btn flex-1 py-3 rounded-2xl border-2 border-slate-100 font-black text-xs shadow-sm">3日目</button>
@@ -343,134 +243,224 @@
 
                     <!-- Day 1 Content -->
                     <div id="day-1" class="schedule-content active">
-                        <div class="bg-white/50 p-4 rounded-2xl mb-6 border border-white/50 text-[10px] text-amber-600 font-bold flex items-center gap-1">
-                            <i class="fas fa-car-side"></i> 与那原家は別移動となります
+                        <div class="bg-white/60 p-4 rounded-2xl mb-8 text-[10px] text-amber-600 font-bold flex items-center gap-1 border border-white/50">
+                            <i class="fas fa-car-side"></i> 1日目：与那原家は宿合流までは別移動となります
                         </div>
-                        <div class="space-y-6 text-sm text-left">
-                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">07:30</span> <p class="font-bold">なつみアパート出発</p></div>
-                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">09:00</span> <p class="font-bold">大分・佐賀関港 出発 ⛴️<br><small class="opacity-60 text-[10px]">九四フェリーで愛媛へ</small></p></div>
-                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">10:10</span> <p class="font-bold">愛媛・三崎港 到着</p></div>
-                            
-                            <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-sky-500 w-12">11:30</span>
-                                <div class="flex-1">
-                                    <p class="font-bold underline decoration-sky-300 decoration-4">ランチ：大洲炉端 油屋 🍱</p>
-                                    <a href="https://maps.app.goo.gl/JrAbA9cdpnVECxB49" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+
+                        <div class="traffic"><span>なつみアパート出発 (07:30)</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="area_item">
+                            <div class="time">09:00</div>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>佐賀関港 出発</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">FERRY PHOTO HERE</p>
                                 </div>
+                                <p class="body">九四フェリーで四国へ。約70分の船旅で旅行気分を高めましょう！</p>
                             </div>
-                            
-                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">12:45</span> 
-                                <div class="flex-1">
-                                    <p class="font-bold">大洲城・城下町 散策 🏯</p>
-                                    <a href="https://maps.app.goo.gl/2RrsF3iNDA8tUsz1A" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                        </div>
+
+                        <div class="traffic"><span>10:10 三崎港 到着・出発</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <div class="area_item">
+                            <div class="time">11:30</div>
+                            <span class="stay-time">滞在：1時間15分</span>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>大洲炉端 油屋</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">LUNCH PHOTO HERE</p>
                                 </div>
+                                <p class="body">趣のある建物で1日目のランチタイム。地元の美味しい料理をいただきます。</p>
+                                <a href="https://maps.app.goo.gl/JrAbA9cdpnVECxB49" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
                             </div>
-                            
-                            <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-sky-500 w-12">16:30</span>
-                                <div class="flex-1">
-                                    <p class="font-bold underline decoration-sky-300 decoration-4">うどんバカ一代 🍜</p>
-                                    <p class="text-[10px] opacity-70 mt-1">高松の人気店！本場の讃岐うどん。</p>
-                                    <a href="https://maps.app.goo.gl/Bp9Vj41dLnvYjrPp8" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                        </div>
+
+                        <div class="traffic"><span>城下町をゆっくり歩く</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <div class="area_item">
+                            <div class="time">12:45</div>
+                            <span class="stay-time">滞在：1時間30分</span>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>大洲城・城下町散策</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">CASTLE PHOTO HERE</p>
                                 </div>
+                                <p class="body">伊予の小京都。歴史を感じる街並みを散策。素敵な家族写真を撮りましょう。</p>
+                                <a href="https://maps.app.goo.gl/2RrsF3iNDA8tUsz1A" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
                             </div>
-                            
-                            <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-sky-500 w-12">18:00</span>
-                                <div class="flex-1">
-                                    <p class="font-bold text-slate-700">リブマックスリゾート讃岐塩江 チェックイン ♨️</p>
-                                    <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white h-[150px] mt-2">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3301.6409493827273!2d134.1010420759884!3d34.155526973118285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553b885a9525485%3A0x643d916fa4c249b9!2z44Oq44OW44Oe44OD44Kv44K544Oq44K-44O844OI6K6D5bKQ5aGp5rGf5rip5rOJ!5e0!3m2!1sja!2sjp!4v1772716480452!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                                    </div>
+                        </div>
+
+                        <div class="traffic"><span>高速道路で高松方面へ</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <div class="area_item">
+                            <div class="time">16:30</div>
+                            <span class="stay-time">滞在：45分</span>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>うどんバカ一代</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">UDON PHOTO HERE</p>
                                 </div>
+                                <p class="body">香川といえば！超人気店の釜バターうどんで1回目のうどん体験！</p>
+                                <a href="https://maps.app.goo.gl/Bp9Vj41dLnvYjrPp8" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
                             </div>
-                            <div class="flex gap-4"><span class="font-black text-sky-500 w-12">19:00</span> <p class="font-bold">夕食バイキング 🍴</p></div>
+                        </div>
+
+                        <div class="traffic"><span>塩江街道を南へ</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <div class="area_item" style="border: 2px solid var(--primary-light);">
+                            <div class="time" style="background: var(--primary-light);">18:00</div>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>リブマックスリゾート讃岐塩江</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">HOTEL PHOTO HERE</p>
+                                </div>
+                                <div class="bg-sky-50 text-sky-700 text-center py-2 rounded-lg font-black text-xs mb-4">
+                                    🤝 与那原家合流！
+                                </div>
+                                <p class="body">宿にチェックイン。夕食バイキングは19:00スタート。ここで全員集合です！</p>
+                                <a href="https://www.google.com/maps?q=34.1555269,134.1010421" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Day 2 Content -->
                     <div id="day-2" class="schedule-content">
-                        <div class="space-y-6 text-sm text-left">
-                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">07:15</span> <p class="font-bold">朝食バイキング</p></div>
-                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">08:30</span> <p class="font-bold">宿（塩江）出発 🚗</p></div>
-                            <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-pink-500 w-12">09:30</span>
-                                <div class="flex-1">
-                                    <p class="font-bold underline decoration-pink-300 decoration-4 text-pink-600">金刀比羅宮 参拝開始 ⛩️</p>
-                                    <p class="text-[11px] font-bold mt-1">785段の御本宮を目指します！</p>
-                                    <a href="https://maps.app.goo.gl/HQYQf6X143mAWhy67" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                        <div class="traffic"><span>朝食バイキング (07:15)</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+                        <div class="traffic"><span>08:30 宿を出発</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="area_item">
+                            <div class="time">09:30</div>
+                            <span class="stay-time">滞在：2時間</span>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>金刀比羅宮 参拝</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">SHRINE PHOTO HERE</p>
                                 </div>
+                                <p class="body">旅のメインイベント！本宮までの785段を自分のペースで登りましょう。</p>
+                                <a href="https://maps.app.goo.gl/HQYQf6X143mAWhy67" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
                             </div>
-                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">11:30</span> <p class="font-bold">大門（365段目）からタクシーで下山 🚕</p></div>
-                            <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-pink-500 w-12">12:30</span>
-                                <div class="flex-1">
-                                    <p class="font-bold">ランチタイム（候補） 🥢</p>
-                                    <div class="flex flex-wrap gap-2 mt-2">
-                                        <a href="https://maps.app.goo.gl/27XMZqMZQ2ABqrEg7" target="_blank" class="map-link-btn">Cafe 森と山</a>
-                                        <a href="https://maps.app.goo.gl/cYWNHsmTE1TdCEiG6" target="_blank" class="map-link-btn">こんぴらうどん</a>
-                                        <a href="https://maps.app.goo.gl/iJ2ScecmeVgFTPDYA" target="_blank" class="map-link-btn">つるだや</a>
+                        </div>
+
+                        <div class="traffic"><span>11:30 大門からタクシー下山</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <div class="area_item">
+                            <div class="time">12:30</div>
+                            <span class="stay-time">ランチ候補</span>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>こんぴら付近でランチ</span></h2>
+                                <p class="body">お好みのお店を選んでお昼ご飯。門前町散策も楽しみましょう！</p>
+                                <div class="space-y-3 mt-4">
+                                    <div class="bg-pink-50 p-3 rounded-xl">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-bold text-xs text-pink-700">① Cafe 森と山</span>
+                                        </div>
+                                        <a href="https://maps.app.goo.gl/27XMZqMZQ2ABqrEg7" target="_blank" class="map-link-btn py-2 text-[11px]"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
+                                    </div>
+                                    <div class="bg-pink-50 p-3 rounded-xl">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-bold text-xs text-pink-700">② こんぴらうどん</span>
+                                        </div>
+                                        <a href="https://maps.app.goo.gl/cYWNHsmTE1TdCEiG6" target="_blank" class="map-link-btn py-2 text-[11px]"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
+                                    </div>
+                                    <div class="bg-pink-50 p-3 rounded-xl">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-bold text-xs text-pink-700">③ つるだや</span>
+                                        </div>
+                                        <a href="https://maps.app.goo.gl/iJ2ScecmeVgFTPDYA" target="_blank" class="map-link-btn py-2 text-[11px]"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">14:00</span> <p class="font-bold">門前町散策・お土産 🛍️</p></div>
-                            <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-pink-500 w-12">15:30</span>
-                                <div class="flex-1">
-                                    <p class="font-bold text-slate-700">華の湯 紅梅亭 チェックイン ♨️</p>
-                                    <a href="https://maps.app.goo.gl/st43uXZtg3iHXrad9" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
-                                    <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white h-[150px] mt-2">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3300.2489992945857!2d133.81441087572242!3d34.19111387310499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3553d6439e091ef7%3A0x5c5e3bf9d73de2c6!2z5rmv5YWD44GT44KT44G044KJ5rip5rOJ6I-v44Gu5rmvIOe0heaiheS6rQ!5e0!3m2!1sja!2sjp!4v1772716423154!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                                    </div>
+                        </div>
+
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <div class="area_item" style="border: 2px solid var(--accent-pink);">
+                            <div class="time" style="background: var(--accent-pink);">15:30</div>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>湯元こんぴら温泉 紅梅亭</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">RYOKAN PHOTO HERE</p>
                                 </div>
+                                <p class="body">2日目は豪華な温泉旅館。ゆっくりお湯に浸かって。18:00からお祝い夕食！</p>
+                                <a href="https://maps.app.goo.gl/st43uXZtg3iHXrad9" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
                             </div>
-                            <div class="flex gap-4"><span class="font-black text-pink-500 w-12">18:00</span> <p class="font-bold">夕食バイキング 🍴</p></div>
                         </div>
                     </div>
 
-                    <!-- Day 3 -->
+                    <!-- Day 3 Content -->
                     <div id="day-3" class="schedule-content">
-                        <div class="space-y-6 text-sm text-left">
-                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">07:15</span> <p class="font-bold">朝食バイキング</p></div>
-                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">08:30</span> <p class="font-bold">紅梅亭 出発</p></div>
-                            <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-slate-500 w-12">09:00</span>
-                                <div class="flex-1">
-                                    <p class="font-bold underline decoration-slate-300 decoration-4">四国水族館 🐬</p>
-                                    <a href="https://maps.app.goo.gl/Ky8pkdvm1LSdBy1g9" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認</a>
+                        <div class="traffic"><span>朝食バイキング (07:15)</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+                        <div class="traffic"><span>08:30 紅梅亭を出発</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <div class="area_item">
+                            <div class="time">09:00</div>
+                            <span class="stay-time">滞在目安：2時間</span>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>四国水族館</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">AQUARIUM PHOTO HERE</p>
                                 </div>
+                                <p class="body">開館と同時に入場！瀬戸内の美しい海をテーマにした水族館を楽しみます。</p>
+                                <a href="https://maps.app.goo.gl/Ky8pkdvm1LSdBy1g9" target="_blank" class="map-link-btn"><i class="fas fa-map-marker-alt"></i> 地図で確認する</a>
                             </div>
-                            <div class="flex gap-4 pt-4 border-t border-white/30">
-                                <span class="font-black text-slate-500 w-12">11:00</span>
-                                <div class="flex-1">
-                                    <p class="font-bold underline decoration-slate-300 decoration-4 text-slate-600">うどん おか泉 🍜</p>
-                                    <div class="flex flex-wrap gap-2 mt-2">
-                                        <a href="https://maps.app.goo.gl/SqwcuPSvD5N5FuSJ6" target="_blank" class="map-link-btn">おか泉</a>
-                                        <a href="https://maps.app.goo.gl/uY7vNR8FSPCbWKHn6" target="_blank" class="map-link-btn">瀬戸晴れ</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex gap-4 pt-4 border-t border-slate-300/30">
-                                <span class="font-black text-red-500 w-12">13:00</span>
-                                <div class="flex-1 bg-red-50 p-3 rounded-xl border border-red-100 text-center">
-                                    <p class="font-bold text-red-600">与那原家と解散 (;_;)/~</p>
-                                    <p class="text-[10px] text-red-400 mt-1">坂出IC付近。大分組は三崎港へ直行！</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">16:00</span> <p class="font-bold">愛媛・三崎港 到着</p></div>
-                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">17:00</span> <p class="font-bold text-red-600">三崎港 出港 ⛴️（厳守！）</p></div>
-                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">18:10</span> <p class="font-bold">大分・佐賀関 到着</p></div>
-                            <div class="flex gap-4"><span class="font-black text-slate-500 w-12">19:00</span> <p class="font-bold">なつみアパート到着 お疲れ様！ 🏠</p></div>
                         </div>
+
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <div class="area_item">
+                            <div class="time">11:00</div>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>うどん おか泉</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">LAST UDON PHOTO HERE</p>
+                                </div>
+                                <p class="body">人気の「冷天おろし」が絶品！行列の場合は「瀬戸晴れ」への変更も検討しましょう。</p>
+                                <div class="grid grid-cols-2 gap-2 mt-4">
+                                    <a href="https://maps.app.goo.gl/SqwcuPSvD5N5FuSJ6" target="_blank" class="map-link-btn py-2 text-[10px]"><i class="fas fa-map-marker-alt"></i> おか泉</a>
+                                    <a href="https://maps.app.goo.gl/uY7vNR8FSPCbWKHn6" target="_blank" class="map-link-btn py-2 text-[10px] border-slate-300"><i class="fas fa-map-marker-alt"></i> 瀬戸晴れ</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+
+                        <!-- お別れイベント枠 -->
+                        <div class="area_item border-2 border-red-200" style="background-color: #fffef2;">
+                            <div class="time" style="background: #e11d48;">13:00</div>
+                            <div class="area_item_inner">
+                                <h2 class="ttl"><span>与那原家と解散</span></h2>
+                                <div class="spot-photo-frame">
+                                    <p class="text-[10px] text-slate-300 font-black italic">FAREWELL PHOTO HERE</p>
+                                </div>
+                                <p class="body font-bold text-slate-600 text-center">坂出IC付近でお別れです。最高の思い出をありがとう！またね！</p>
+                            </div>
+                        </div>
+
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+                        <div class="traffic"><span>三崎港へ直行 (16:00着)</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+                        <div class="traffic"><span>17:00 三崎港を出航 (厳守！)</span></div>
+                        <div class="traffic"><i class="fas fa-arrow-down"></i></div>
+                        <div class="traffic"><span>19:00 帰宅予定 お疲れ様！</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- メンバー紹介 -->
-        <section id="members" class="px-6 py-20 bg-white">
+        <section id="members" class="px-6 py-20 bg-white text-center">
             <h2>メンバー紹介</h2>
-            <div class="space-y-12">
+            <div class="space-y-12" id="group-container">
                 <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#94DFF6] pl-3 text-slate-500 text-left">左藤の意思を継ぐもの</h3><div id="group-1" class="grid grid-cols-1 gap-4"></div></div>
                 <div><h3 class="font-black text-xs mb-4 border-l-4 border-[#f27eb7] pl-3 text-slate-500 text-left">スペシャルゲスト</h3><div id="group-2" class="grid grid-cols-1 gap-4"></div></div>
                 <div>
@@ -486,41 +476,23 @@
             </div>
         </section>
 
-        <!-- 持ち物リスト (全項目復元) -->
+        <!-- 持ち物リスト -->
         <section id="packing" class="px-6 py-20 bg-slate-50 border-t-2 border-white">
             <h2>持ち物リスト</h2>
-            <div class="space-y-4 max-w-[320px] mx-auto">
-                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
-                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
-                    <span class="text-sm font-bold text-slate-600">歩きやすい靴（参拝用）</span>
-                </label>
-                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
-                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
-                    <span class="text-sm font-bold text-slate-600">飲み物・水分補給</span>
-                </label>
-                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
-                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
-                    <span class="text-sm font-bold text-slate-600">モバイルバッテリー</span>
-                </label>
-                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
-                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
-                    <span class="text-sm font-bold text-slate-600">着替え・タオル</span>
-                </label>
-                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
-                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
-                    <span class="text-sm font-bold text-slate-600">常備薬・健康保険証</span>
-                </label>
-                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer">
-                    <input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full">
-                    <span class="text-sm font-bold text-slate-600">お子様用のお菓子</span>
-                </label>
+            <div class="space-y-4 max-w-[320px] mx-auto text-left">
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">歩きやすい靴（参拝用）</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">飲み物・水分補給</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">モバイルバッテリー</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">着替え・タオル</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">常備薬・健康保険証</span></label>
+                <label class="flex items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 cursor-pointer"><input type="checkbox" class="w-6 h-6 accent-[#f27eb7] rounded-full"><span class="text-sm font-bold text-slate-600">お子様用のお菓子</span></label>
             </div>
         </section>
 
         <footer class="bg-slate-900 text-white p-16 text-center">
-            <p class="text-xl font-black italic mb-4 tracking-tighter text-center">Have a nice trip!</p>
+            <p class="text-xl font-black italic mb-4 tracking-tighter">Have a nice trip!</p>
             <div class="w-12 h-1 bg-[#f27eb7] mx-auto mb-8"></div>
-            <p class="text-[10px] opacity-40 uppercase tracking-[0.3em] text-center">Left Three Sisters Presents</p>
+            <p class="text-[10px] opacity-40 uppercase tracking-[0.3em]">Left Three Sisters Presents</p>
             <p class="text-[8px] opacity-20 mt-8 italic text-center">Special Thanks: KAZUO</p>
         </footer>
     </div>
@@ -533,59 +505,33 @@
         <div class="text-center py-40">
             <i class="fas fa-images text-7xl text-pink-50 mb-6"></i>
             <h2 class="text-2xl font-black mb-4 text-center">写真準備中・・・</h2>
-            <p class="text-sm text-slate-400 text-center">旅が終わったら、素敵な家族写真を<br>ここにたくさん詰め込みましょう！</p>
+            <p class="text-sm text-slate-400 text-center">旅が終わったら更新しましょう！</p>
         </div>
     </div>
 
-    <!-- Splide JS & 制御スクリプト -->
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // スライダー初期化
-            new Splide('#slider_fv', {
-                type: 'loop', drag: 'free', focus: 'center', arrows: false, pagination: false, autoWidth: true, gap: 15,
-                autoScroll: { speed: 0.6, pauseOnHover: false, pauseOnFocus: false },
-            }).mount(window.splide.Extensions);
-
-            // スクロール時のフェードアップアニメーション
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-            }, { threshold: 0.2 });
+            new Splide('#slider_fv', { type: 'loop', drag: 'free', focus: 'center', arrows: false, pagination: false, autoWidth: true, gap: 15, autoScroll: { speed: 0.6, pauseOnHover: false, pauseOnFocus: false } }).mount(window.splide.Extensions);
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.2 });
             document.querySelectorAll('.fade-up-trigger').forEach(el => observer.observe(el));
         });
 
-        // 日程切り替え関数
         function switchDay(day) {
             const container = document.getElementById('schedule-container');
             container.className = 'schedule-box day-' + day + '-active';
-            
             document.querySelectorAll('.schedule-content').forEach(c => c.classList.remove('active'));
             document.getElementById('day-' + day).classList.add('active');
         }
 
-        // TOPへもどるボタンの表示制御
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('back-to-top');
-            if (window.scrollY > 400) btn.classList.add('show');
-            else btn.classList.remove('show');
-        });
-
-        // ギャラリー切り替え関数 (メインを非表示にする)
         function toggleGallery(show) {
             const main = document.getElementById('main-content');
             const gallery = document.getElementById('gallery-page');
-            if (show) {
-                main.classList.add('hidden');
-                gallery.classList.add('active');
-                window.scrollTo(0, 0);
-            } else {
-                main.classList.remove('hidden');
-                gallery.classList.remove('active');
-            }
+            if (show) { main.classList.add('hidden'); gallery.classList.add('active'); window.scrollTo(0, 0); }
+            else { main.classList.remove('hidden'); gallery.classList.remove('active'); }
         }
 
-        // メンバーカード生成
         const renderMember = (m) => `
             <div class="member-card">
                 <div class="member-img-box flex items-center justify-center text-slate-200"><i class="fas fa-image text-4xl"></i></div>
@@ -603,8 +549,13 @@
             "group-4": [{name:"かずお",role:"父・見守り担当",comment:"★テキスト★"}]
         };
         Object.entries(groups).forEach(([id, members]) => { 
-            const el = document.getElementById(id);
-            if(el) el.innerHTML = members.map(renderMember).join(''); 
+            const container = document.getElementById(id);
+            if(container) container.innerHTML = members.map(renderMember).join(''); 
+        });
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('back-to-top');
+            if (window.scrollY > 400) btn.classList.add('show');
+            else btn.classList.remove('show');
         });
     </script>
 </body>
