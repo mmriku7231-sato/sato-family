@@ -143,48 +143,60 @@
             <button onclick="toggleGallery(true)" class="text-[11px] font-bold text-[#f27eb7]">ギャラリー</button>
         </nav>
 
-        <header id="top" class="fv-container">
+<header id="top" class="fv-container">
+            <!-- タイトルエリア -->
             <div class="fv-title-area">
                 <div class="fv-title-area_inner relative inline-block">
                     <div class="inline-block bg-red-500 text-white text-[10px] font-black px-6 py-1 rounded-full mb-4 shadow-md animate-bounce relative z-10">in香川</div>
                     <h1 class="fv-title italic relative z-10">祝！還暦旅行<br><span class="text-xl tracking-[0.2em] -mt-2 block not-italic">左藤3姉妹プレゼンツ</span></h1>
                 </div>
             </div>
-<div id="slider_fv" class="splide h-full py-4">
+
+            <!-- スライダー部分 -->
+            <div id="slider_fv" class="splide h-full">
                 <div class="splide__track h-full">
                     <ul class="splide__list h-full">
-                        <!-- 1枚目と2枚目（上下に半分ずつ） -->
-                        <li class="splide__slide">
-                            <div class="w-[260px] h-full flex flex-col gap-3">
-                                <img src="1.jpg" class="collage-img h-1/2 rounded-2xl shadow-sm">
-                                <img src="2.jpg" class="collage-img h-1/2 rounded-2xl shadow-sm">
+                        
+                        <!-- 1・2枚目 (縦積み) -->
+                        <!-- flex items-center で上下中央に配置 -->
+                        <li class="splide__slide flex items-center">
+                            <div class="w-[220px] flex flex-col gap-3">
+                                <!-- aspect-[4/3] で形を統一してきれいに見せます -->
+                                <img src="1.jpg" class="w-full aspect-[4/3] object-cover rounded-2xl shadow-md">
+                                <img src="2.jpg" class="w-full aspect-[4/3] object-cover rounded-2xl shadow-md">
                             </div>
                         </li>
-<!-- 3枚目（1枚を大きく・全体表示） -->
-<li class="splide__slide">
-    <div class="w-[260px] h-full flex items-center">
-        <!-- object-fit: contain; を追加 -->
-        <img src="3.jpg" class="collage-img rounded-2xl shadow-sm" style="object-fit: contain; height: auto; max-height: 100%;">
-    </div>
-</li>目と5枚目（上下に半分ずつ） -->
-                        <li class="splide__slide">
-                            <div class="w-[260px] h-full flex flex-col gap-3">
-                                <img src="4.jpg" class="collage-img h-1/2 rounded-2xl shadow-sm">
-                                <img src="5.jpg" class="collage-img h-1/2 rounded-2xl shadow-sm">
+                        
+                        <!-- 3枚目 (全体表示・見切れない) -->
+                        <li class="splide__slide flex items-center">
+                            <div class="w-[320px]">
+                                <!-- h-auto object-contain で元の写真の比率を完全に守ります -->
+                                <img src="3.jpg" class="w-full h-auto object-contain rounded-2xl shadow-md">
                             </div>
                         </li>
-                        <!-- 6枚目（1枚を大きく） -->
-                        <li class="splide__slide">
-                            <div class="w-[260px] h-full">
-                                <img src="6.jpg" class="collage-img rounded-2xl shadow-sm">
+
+                        <!-- 4・5枚目 (縦積み) -->
+                        <li class="splide__slide flex items-center">
+                            <div class="w-[220px] flex flex-col gap-3">
+                                <img src="4.jpg" class="w-full aspect-[4/3] object-cover rounded-2xl shadow-md">
+                                <img src="5.jpg" class="w-full aspect-[4/3] object-cover rounded-2xl shadow-md">
                             </div>
                         </li>
-                        <!-- 7枚目（1枚を大きく） -->
-                        <li class="splide__slide">
-                            <div class="w-[260px] h-full">
-                                <img src="7.jpg" class="collage-img rounded-2xl shadow-sm">
+
+                        <!-- 6枚目 (全体表示・見切れない) -->
+                        <li class="splide__slide flex items-center">
+                            <div class="w-[320px]">
+                                <img src="6.jpg" class="w-full h-auto object-contain rounded-2xl shadow-md">
                             </div>
                         </li>
+
+                        <!-- 7枚目 (全体表示・見切れない) -->
+                        <li class="splide__slide flex items-center">
+                            <div class="w-[320px]">
+                                <img src="7.jpg" class="w-full h-auto object-contain rounded-2xl shadow-md">
+                            </div>
+                        </li>
+
                     </ul>
                 </div>
             </div>
