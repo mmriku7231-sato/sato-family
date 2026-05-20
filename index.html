@@ -445,37 +445,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js"></script>
-<script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. スライダーの起動（すぐに表示させる）
-            const splide = new Splide('#slider_fv', { 
-                type: 'loop', 
-                drag: 'free', 
-                focus: 'center', 
-                arrows: false, 
-                pagination: false, 
-                autoWidth: true, 
-                gap: 15, 
-                autoScroll: { speed: 0.6, pauseOnHover: false, pauseOnFocus: false } 
-            });
-            splide.mount(window.splide.Extensions);
-
-            // 2. iPhoneの空白対策（画像の読み込みが終わったら、スライダーの幅を再計算する）
-            window.addEventListener('load', function() {
-                splide.refresh();
-            });
-
-            // 3. フェードイン設定
-            const observer = new IntersectionObserver((entries) => { 
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); 
-            }, { threshold: 0.2 });
+            new Splide('#slider_fv', { type: 'loop', drag: 'free', focus: 'center', arrows: false, pagination: false, autoWidth: true, gap: 15, autoScroll: { speed: 0.6, pauseOnHover: false, pauseOnFocus: false } }).mount(window.splide.Extensions);
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.2 });
             document.querySelectorAll('.fade-up-trigger').forEach(el => observer.observe(el));
-
-            // 4. 初期状態の設定（1日目を表示）
-            switchDay(1);
         });
 
-        // タブ切り替え機能
         function switchDay(day) {
             const container = document.getElementById('schedule-container');
             container.className = 'schedule-box day-' + day + '-active';
@@ -483,33 +459,20 @@
             document.getElementById('day-' + day).classList.add('active');
             document.querySelectorAll('.day-tab-item').forEach(t => t.className = 'day-tab-item');
             document.getElementById('fix-tab-' + day).classList.add('active-d' + day);
-            document.querySelectorAll('.tab-btn').forEach(b => { 
-                b.style.backgroundColor = 'white'; 
-                b.style.color = '#4a5568'; 
-                b.style.borderColor = '#f1f5f9'; 
-            });
+            document.querySelectorAll('.tab-btn').forEach(b => { b.style.backgroundColor = 'white'; b.style.color = '#4a5568'; b.style.borderColor = '#f1f5f9'; });
             const activeBtn = document.getElementById('tab-' + day);
             const colors = { 1: '#94DFF6', 2: '#f27eb7', 3: '#94a3b8' };
-            activeBtn.style.backgroundColor = colors[day]; 
-            activeBtn.style.color = 'white'; 
-            activeBtn.style.borderColor = colors[day];
+            activeBtn.style.backgroundColor = colors[day]; activeBtn.style.color = 'white'; activeBtn.style.borderColor = colors[day];
         }
 
-        // ギャラリー切り替え機能
         function toggleGallery(show) {
             const main = document.getElementById('main-content');
             const gallery = document.getElementById('gallery-page');
-            if (show) { 
-                main.classList.add('hidden'); 
-                gallery.classList.add('active'); 
-                window.scrollTo(0, 0); 
-            } else { 
-                main.classList.remove('hidden'); 
-                gallery.classList.remove('active'); 
-            }
+            if (show) { main.classList.add('hidden'); gallery.classList.add('active'); window.scrollTo(0, 0); }
+            else { main.classList.remove('hidden'); gallery.classList.remove('active'); }
         }
 
-        // メンバー描画機能
+        // フォルダ名・接頭辞を取り除いて直接読み込むように修正
         const renderMember = (m) => `
             <div class="member-card transition-all hover:shadow-lg hover:-translate-y-1">
                 <div class="member-img-box">
@@ -522,10 +485,11 @@
                 </div>
             </div>`;
 
+        // IDをアップロードされた名前に統一
         const groups = {
             "group-1": [{id:"yumiyo",name:"ゆみよ",role:"母・主役",comment:"還暦おめでとう！"},{id:"asami",name:"あさみ",role:"長女",comment:"企画や準備を率先"},{id:"mina",name:"みな",role:"次女",comment:"不幸を引きがち"},{id:"natsu",name:"なつみ",role:"三女",comment:"2026年厄年"}],
             "group-2": [{id:"takao",name:"たかお",role:"次女夫",comment:"みなに負けないで"},{id:"haru",name:"はるたか",role:"次女長男",comment:"マイクラの天才"},{id:"hiro",name:"ひろたか",role:"次女次男",comment:"ムチムチ"},{id:"yukito",name:"ゆきと",role:"長女息子",comment:"よだれ"}],
-            "group-3-active": [{id:"kabukimaru",name:"歌舞伎丸",role:"お留守番",comment:"規格外のデブ"},{id:"chachamaru",name:"茶々丸",role:"お留守番",comment:"食いしん坊"}],
+            "group-3-active": [{id:"kabu",name:"歌舞伎丸",role:"お留守番",comment:"規格外のデブ"},{id:"chacha",name:"茶々丸",role:"お留守番",comment:"食いしん坊"}],
             "group-3-passed": [{id:"nyanta",name:"にゃんた",role:"故猫",comment:"優しい天才"},{id:"nao",name:"なお様",role:"故猫",comment:"永遠の美人"},{id:"arisu",name:"アリス",role:"故猫",comment:"なつみ大好き天才ちゃん"},{id:"azuki",name:"あずき",role:"故猫",comment:"上に乗るのが好き"}],
             "group-4": [{id:"kazuo",name:"かずお",role:"父",comment:"いつも見てます"}]
         };
@@ -535,12 +499,13 @@
             if(container) container.innerHTML = members.map(renderMember).join(''); 
         });
 
-        // トップへ戻るボタン
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('back-to-top');
             if (window.scrollY > 400) btn.classList.add('show');
             else btn.classList.remove('show');
         });
+
+        window.onload = () => switchDay(1);
     </script>
 
 </body>
